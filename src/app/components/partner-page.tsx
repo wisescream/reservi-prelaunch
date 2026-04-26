@@ -99,17 +99,17 @@ export function PartnerPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
   };
 
   const pricing = lang === "ar" ? [
-    { name: "المبتدئ", price: "$0", per: "/شهر", desc: "مثالي للمطاعم الصغيرة التي بدأت للتو.", features: ["حتى 50 حجز/شهر", "تقويم أساسي", "دعم عبر البريد"], featured: false },
-    { name: "النمو", price: "$99", per: "/شهر", desc: "قم بتوسيع حجوزاتك باستخدام الأتمتة والتحليلات.", features: ["حجوزات غير محدودة", "تذكيرات ذكية", "تحليلات فورية", "دعم ذو أولوية"], featured: true },
-    { name: "المميز", price: "مخصص", per: "", desc: "مصمم للمجموعات والأماكن ذات الحجم الكبير.", features: ["مواقع متعددة", "تكاملات مخصصة", "مدير حساب مخصص", "إبراز مميز"], featured: false },
+    { name: "المبتدئ", price: "اتصل بنا", per: "", desc: "مثالي للمطاعم الصغيرة التي بدأت للتو.", features: ["حتى 50 حجز/شهر", "تقويم أساسي", "دعم عبر البريد"], featured: false },
+    { name: "النمو", price: "اتصل بنا", per: "", desc: "قم بتوسيع حجوزاتك باستخدام الأتمتة والتحليلات.", features: ["حجوزات غير محدودة", "تذكيرات ذكية", "تحليلات فورية", "دعم ذو أولوية"], featured: true },
+    { name: "المميز", price: "اتصل بنا", per: "", desc: "مصمم للمجموعات والأماكن ذات الحجم الكبير.", features: ["مواقع متعددة", "تكاملات مخصصة", "مدير حساب مخصص", "إبراز مميز"], featured: false },
   ] : lang === "fr" ? [
-    { name: "Starter", price: "0 €", per: "/mois", desc: "Parfait pour démarrer.", features: ["Jusqu'à 50 réservations/mois", "Calendrier simple", "Support mail"], featured: false },
-    { name: "Croissance", price: "99 €", per: "/mois", desc: "Automatisez pour croître plus vite.", features: ["Réservations illimitées", "Rappels intelligents", "Analyses live", "Support premium"], featured: true },
-    { name: "Premium", price: "Sur mesure", per: "", desc: "Pour les réseaux ou gros volumes.", features: ["Multi-établissements", "Intégrations CRM", "Conseiller dédié", "Mise en avant"], featured: false },
+    { name: "Starter", price: "Contactez-nous", per: "", desc: "Parfait pour démarrer.", features: ["Jusqu'à 50 réservations/mois", "Calendrier simple", "Support mail"], featured: false },
+    { name: "Croissance", price: "Contactez-nous", per: "", desc: "Automatisez pour croître plus vite.", features: ["Réservations illimitées", "Rappels intelligents", "Analyses live", "Support premium"], featured: true },
+    { name: "Premium", price: "Contactez-nous", per: "", desc: "Pour les réseaux ou gros volumes.", features: ["Multi-établissements", "Intégrations CRM", "Conseiller dédié", "Mise en avant"], featured: false },
   ] : [
-    { name: "Starter", price: "$0", per: "/mo", desc: "Perfect for small restaurants getting started.", features: ["Up to 50 bookings/mo", "Basic calendar", "Email support"], featured: false },
-    { name: "Growth", price: "$99", per: "/mo", desc: "Scale your bookings with automation & analytics.", features: ["Unlimited bookings", "Smart reminders", "Real-time analytics", "Priority support"], featured: true },
-    { name: "Premium", price: "Custom", per: "", desc: "Tailored for groups and high-volume venues.", features: ["Multi-location", "Custom integrations", "Dedicated CSM", "Featured placement"], featured: false },
+    { name: "Starter", price: "Contact us", per: "", desc: "Perfect for small restaurants getting started.", features: ["Up to 50 bookings/mo", "Basic calendar", "Email support"], featured: false },
+    { name: "Growth", price: "Contact us", per: "", desc: "Scale your bookings with automation & analytics.", features: ["Unlimited bookings", "Smart reminders", "Real-time analytics", "Priority support"], featured: true },
+    { name: "Premium", price: "Contact us", per: "", desc: "Tailored for groups and high-volume venues.", features: ["Multi-location", "Custom integrations", "Dedicated CSM", "Featured placement"], featured: false },
   ];
 
   const testimonial = lang === "ar" ? {
