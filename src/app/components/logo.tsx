@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import logoImg from "../../imports/image-2.png";
 
+import { useTranslation } from "../../lib/translations";
+
 export function ReserviLogo({ animateOnMount = true }: { animateOnMount?: boolean }) {
+  const { lang } = useTranslation();
   const [phase, setPhase] = useState<"utensils" | "logo">("utensils");
   const [hover, setHover] = useState(false);
 
@@ -125,27 +128,43 @@ export function ReserviLogo({ animateOnMount = true }: { animateOnMount?: boolea
 
       <div
         className="flex overflow-hidden"
-        style={{ fontWeight: 800, fontSize: 22, color: "#1A1A1A", letterSpacing: -0.5 }}
+        style={{ fontWeight: 800, fontSize: 22, color: "#1A1A1A", letterSpacing: lang === "ar" ? 0 : -0.5 }}
       >
-        {"Reservi".split("").map((c, i) => (
+        {lang === "ar" ? (
           <motion.span
-            key={i}
             initial={animateOnMount ? { y: 24, opacity: 0 } : false}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.15 + i * 0.05, type: "spring", stiffness: 220, damping: 18 }}
-            whileHover={{ y: -3 }}
+            transition={{ delay: 0.15, type: "spring", stiffness: 220, damping: 18 }}
             style={{
               display: "inline-block",
-              color: i === 0 ? "#E8450A" : "#1A1A1A",
+              color: "#E8450A",
               cursor: "pointer",
-              transition: "color 0.2s",
+              fontFamily: "sans-serif"
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#E8450A")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = i === 0 ? "#E8450A" : "#1A1A1A")}
           >
-            {c}
+            رِزيرڤي
           </motion.span>
-        ))}
+        ) : (
+          "Reservi".split("").map((c, i) => (
+            <motion.span
+              key={i}
+              initial={animateOnMount ? { y: 24, opacity: 0 } : false}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15 + i * 0.05, type: "spring", stiffness: 220, damping: 18 }}
+              whileHover={{ y: -3 }}
+              style={{
+                display: "inline-block",
+                color: i === 0 ? "#E8450A" : "#1A1A1A",
+                cursor: "pointer",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#E8450A")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = i === 0 ? "#E8450A" : "#1A1A1A")}
+            >
+              {c}
+            </motion.span>
+          ))
+        )}
       </div>
     </div>
   );

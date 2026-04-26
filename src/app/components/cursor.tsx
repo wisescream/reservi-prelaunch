@@ -153,7 +153,7 @@ export function KnifeForkCursor() {
       {/* Main cursor */}
       <motion.div
         className="pointer-events-none fixed z-[9999] top-0 left-0"
-        style={{ x: sx, y: sy }}
+        style={{ x: cx, y: cy }}
       >
         <motion.div
           style={{ x: -18, y: -18 }}
@@ -233,7 +233,7 @@ export function KnifeForkCursor() {
       {/* Contextual label */}
       <motion.div
         className="pointer-events-none fixed z-[9999] top-0 left-0"
-        style={{ x: sx, y: sy }}
+        style={{ x: cx, y: cy }}
       >
         <AnimatePresence>
           {label && (
