@@ -441,9 +441,9 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             <p style={{ color: "#555555", fontSize: 17 }} className="mt-4">We'd love to hear from you. Fill out the form or reach us directly.</p>
             <div className="mt-10 space-y-6">
               {[
-                { icon: <Mail size={20} />, label: "Email", value: "hello@reservi.com" },
-                { icon: <Phone size={20} />, label: "Phone", value: "+1 (888) 123-4567" },
-                { icon: <MapPin size={20} />, label: "Address", value: "123 Dining St, New York, NY 10001" },
+                { icon: <Mail size={20} />, label: "Email", value: "reservifouders@gmail.com" },
+                { icon: <Phone size={20} />, label: "Phone", value: "+212 642-134117 | +212 664-284817" },
+                { icon: <MapPin size={20} />, label: "Address", value: "Casablanca, Morocco" },
               ].map((c, i) => (
                 <AliveContactRow key={c.label} icon={c.icon} label={c.label} value={c.value} index={i} />
               ))}
