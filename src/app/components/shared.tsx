@@ -237,7 +237,7 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
                   className="mt-2 bg-[#E8450A] text-white px-4 py-3 rounded-lg"
                   style={{ fontWeight: 600 }}
                 >
-                  Join Waitlist
+                  {t("join_waitlist")}
                 </button>
               </div>
             </motion.div>
