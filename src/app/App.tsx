@@ -15,6 +15,7 @@ const PartnerPage = React.lazy(() => import("./components/partner-page").then(mo
 const NotFoundPage = React.lazy(() => import("./components/NotFound").then(module => ({ default: module.NotFoundPage })));
 import { KnifeForkCursor } from "./components/cursor";
 import { ScrollDepthTracker } from "../components/ScrollDepthTracker";
+import { LoadingScreen } from "./components/LoadingScreen";
 
 function AppContent() {
   const location = useLocation();
@@ -42,7 +43,7 @@ function AppContent() {
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-white text-[#E8450A] font-bold text-2xl tracking-wide animate-pulse">Reservi</div>}>
+          <Suspense fallback={<LoadingScreen />}>
             <Routes location={location}>
               <Route path="/" element={<HomePage onNavigate={handleNavigate} />} />
               <Route path="/home" element={<HomePage onNavigate={handleNavigate} />} />
