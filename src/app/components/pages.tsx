@@ -442,7 +442,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             <div className="mt-10 space-y-6">
               {[
                 { icon: <Mail size={20} />, label: "Email", value: "reservifouders@gmail.com" },
-                { icon: <Phone size={20} />, label: "Phone", value: "+212 642-134117 | +212 664-284817" },
+                { icon: <Phone size={20} />, label: "Phone", value: "+212 784-115699" },
                 { icon: <MapPin size={20} />, label: "Address", value: "Casablanca, Morocco" },
               ].map((c, i) => (
                 <AliveContactRow key={c.label} icon={c.icon} label={c.label} value={c.value} index={i} />
