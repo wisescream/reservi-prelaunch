@@ -154,7 +154,7 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       {/* City launch */}
       <section className="bg-[#1A1A1A] text-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-6 py-16 text-center">
-          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 36 }}>Launching soon in your city</motion.h2>
+          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 36 }}>Launching soon in Casablanca</motion.h2>
           <motion.p {...fadeUp} className="text-white/70 mt-3">Joining a curated list of incredible restaurants.</motion.p>
           <div className="mt-10 relative overflow-hidden" style={{ maskImage: "linear-gradient(90deg, transparent, black 12%, black 88%, transparent)", WebkitMaskImage: "linear-gradient(90deg, transparent, black 12%, black 88%, transparent)" }}>
             <motion.div

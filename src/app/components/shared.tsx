@@ -450,9 +450,10 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
           >
             <div style={{ fontWeight: 700 }} className="mb-4">Get in touch</div>
             <ul className="space-y-2 text-white/80" style={{ fontSize: 14 }}>
-              <li>hello@reservi.com</li>
-              <li>+1 (888) 123-4567</li>
-              <li>123 Dining St, NYC</li>
+              <li>reservifouders@gmail.com</li>
+              <li>+212 642-134117</li>
+              <li>+212 664-284817</li>
+              <li>Casablanca, Morocco</li>
             </ul>
           </motion.div>
         </div>
