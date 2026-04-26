@@ -29,50 +29,54 @@ export function LoadingScreen() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative flex items-baseline"
-        style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
+        className="relative flex items-baseline text-black font-extrabold"
+        style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif", fontSize: "3.5rem", letterSpacing: "-0.02em" }}
       >
         {/* Standard Letters */}
-        <div className="flex text-black font-extrabold" style={{ fontSize: "3.5rem", letterSpacing: "-0.02em" }}>
-          {letters.map((char, index) => (
-            <motion.span key={index} variants={letterVariants}>
-              {char}
-            </motion.span>
-          ))}
-        </div>
+        {letters.map((char, index) => (
+          <motion.span key={index} variants={letterVariants}>
+            {char}
+          </motion.span>
+        ))}
 
         {/* Animated 'i' block */}
-        <div className="relative inline-flex flex-col items-center" style={{ width: "1.5rem" }}>
+        <motion.span
+          variants={letterVariants}
+          className="relative inline-block"
+          style={{ width: "0.8rem", height: "2.1rem", verticalAlign: "baseline" }}
+        >
+          {/* Custom 'i' stem to eliminate the font's dot */}
+          <div 
+            className="bg-black mx-auto rounded-[1px]" 
+            style={{ width: "9px", height: "2.1rem" }}
+          />
           {/* Pin dropping with bounce */}
-          <motion.svg
-            viewBox="0 0 24 24"
-            className="w-9 h-9 absolute"
-            style={{ bottom: "2.8rem", left: "50%", transform: "translateX(-50%)" }}
-            initial={{ y: -180, opacity: 0, scale: 0.5 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              damping: 10,
-              stiffness: 120,
-              delay: 0.5,
-            }}
+          {/* Wrapper for the pin to handle layout positioning safely without transform conflicts */}
+          <div 
+            className="absolute" 
+            style={{ bottom: "2.1rem", left: "50%", transform: "translateX(-50%)" }}
           >
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-              fill="#FFA726"
-            />
-            <circle cx="12" cy="9" r="2.5" fill="white" />
-          </motion.svg>
-
-          {/* Stem of 'i' */}
-          <motion.span
-            className="text-black font-extrabold absolute"
-            style={{ fontSize: "3.5rem", bottom: "-0.5rem", left: "50%", transform: "translateX(-50%)" }}
-            variants={letterVariants}
-          >
-            i
-          </motion.span>
-        </div>
+            {/* Pin dropping with bounce */}
+            <motion.svg
+              viewBox="0 0 24 24"
+              className="w-9 h-9"
+              initial={{ y: -180, opacity: 0, scale: 0.5 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{
+                type: "spring",
+                damping: 10,
+                stiffness: 120,
+                delay: 0.5,
+              }}
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                fill="#E8450A"
+              />
+              <circle cx="12" cy="9" r="2.5" fill="white" />
+            </motion.svg>
+          </div>
+        </motion.span>
       </motion.div>
 
       {/* Slogan: BOOK YOUR TABLE */}

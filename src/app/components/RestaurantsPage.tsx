@@ -1,6 +1,6 @@
 import { TrendingUp, Settings, Shield, BarChart3 } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
-import { Navbar, PrimaryButton, SecondaryButton, Footer, Page } from "./shared";
+import { Navbar, PrimaryButton, SecondaryButton, Footer, Page, useTranslation } from "./shared";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { motion } from "motion/react";
 import { AliveFeatureCard } from "./alive";

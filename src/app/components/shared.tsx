@@ -96,11 +96,19 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
                     zIndex: 1,
                   }}
                 >
-                  {(active || isHover) && (
+                  {active && (
                     <motion.span
-                      layoutId="nav-pill"
+                      layoutId="active-pill"
                       className="absolute inset-0 rounded-full"
-                      style={{ background: active ? "#E8450A" : "rgba(232,69,10,0.12)", zIndex: -1 }}
+                      style={{ background: "#E8450A", zIndex: -1 }}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  {isHover && !active && (
+                    <motion.span
+                      layoutId="hover-pill"
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: "rgba(232,69,10,0.12)", zIndex: -1 }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
