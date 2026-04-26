@@ -16,6 +16,7 @@ const NotFoundPage = React.lazy(() => import("./components/NotFound").then(modul
 import { KnifeForkCursor } from "./components/cursor";
 import { ScrollDepthTracker } from "../components/ScrollDepthTracker";
 import { LoadingScreen } from "./components/LoadingScreen";
+import { TranslationProvider } from "../lib/translations";
 
 function AppContent() {
   const location = useLocation();
@@ -64,8 +65,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <TranslationProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </TranslationProvider>
   );
 }

@@ -4,6 +4,7 @@ import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { motion } from "motion/react";
 import { StepCard } from "./step-card";
 import { SplitCard } from "./split-card";
+import { useTranslation } from "../../lib/translations";
 
 const heroFood = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900";
 
@@ -15,6 +16,7 @@ const fadeUp = {
 };
 
 export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
+  const { t, lang } = useTranslation();
   return (
     <>
       <Navbar current="home" onNavigate={onNavigate} />
@@ -29,30 +31,19 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
               className="inline-block px-3 py-1 rounded-full bg-[#FFF1EA] text-[#E8450A]"
               style={{ fontWeight: 600, fontSize: 13, letterSpacing: 1 }}
             >
-              COMING SOON
+              {lang === "ar" ? "قريباً" : lang === "fr" ? "BIENTÔT DISPONIBLE" : "COMING SOON"}
             </motion.span>
             <h1 style={{ fontWeight: 800, fontSize: 56, lineHeight: 1.1, color: "#1A1A1A" }} className="mt-5">
-              Book the best tables in{" "}
-              <motion.span
-                initial={{ backgroundSize: "0% 8px" }}
-                animate={{ backgroundSize: "100% 8px" }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                style={{
-                  color: "#E8450A",
-                  backgroundImage: "linear-gradient(#FFE0D2,#FFE0D2)",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "0 90%",
-                }}
-              >
-                seconds
-              </motion.span>
+              {t("hero_title")}
             </h1>
             <p style={{ color: "#555555", fontSize: 18 }} className="mt-5">
-              Reservi makes restaurant reservations effortless — discover, book, and dine without the hassle of phone calls or waiting.
+              {t("hero_desc")}
             </p>
             <div className="mt-8 flex items-center gap-4">
-              <PrimaryButton onClick={() => onNavigate("waitlist")}>Get Early Access</PrimaryButton>
-              <SecondaryButton onClick={() => onNavigate("features")}>Learn More</SecondaryButton>
+              <PrimaryButton onClick={() => onNavigate("waitlist")}>{t("join_waitlist")}</PrimaryButton>
+              <SecondaryButton onClick={() => onNavigate("features")}>
+                {lang === "ar" ? "اعرف المزيد" : lang === "fr" ? "En savoir plus" : "Learn More"}
+              </SecondaryButton>
             </div>
           </motion.div>
           <div className="flex justify-center">

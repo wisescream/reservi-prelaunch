@@ -23,12 +23,12 @@ export function KnifeForkCursor() {
   // Spring-driven cursor position
   const cx = useMotionValue(-100);
   const cy = useMotionValue(-100);
-  const sx = useSpring(cx, { stiffness: 700, damping: 32, mass: 0.4 });
-  const sy = useSpring(cy, { stiffness: 700, damping: 32, mass: 0.4 });
+  const sx = useSpring(cx, { stiffness: 1000, damping: 22, mass: 0.15 });
+  const sy = useSpring(cy, { stiffness: 1000, damping: 22, mass: 0.15 });
 
   // Slower trailing follower (the orange dot)
-  const tx = useSpring(cx, { stiffness: 220, damping: 24, mass: 0.6 });
-  const ty = useSpring(cy, { stiffness: 220, damping: 24, mass: 0.6 });
+  const tx = useSpring(cx, { stiffness: 500, damping: 18, mass: 0.25 });
+  const ty = useSpring(cy, { stiffness: 500, damping: 18, mass: 0.25 });
 
   const lastPos = useRef({ x: 0, y: 0 });
 
@@ -127,9 +127,9 @@ export function KnifeForkCursor() {
   if (!isDesktop) return null;
 
   const baseScale =
-    mode === "button" || mode === "submit" || mode === "image" ? 1.5 :
-    mode === "text" ? 0.9 : 1;
-  const scale = pressed ? baseScale * 0.78 : baseScale;
+    mode === "button" || mode === "submit" || mode === "image" ? 1.25 :
+    mode === "text" ? 0.75 : 0.8;
+  const scale = pressed ? baseScale * 0.75 : baseScale;
 
   return (
     <>
@@ -142,8 +142,8 @@ export function KnifeForkCursor() {
           className="rounded-full bg-[#E8450A]"
           style={{ x: -6, y: -6 }}
           animate={{
-            width: visible ? 12 : 0,
-            height: visible ? 12 : 0,
+            width: visible ? 8 : 0,
+            height: visible ? 8 : 0,
             opacity: visible ? 0.4 : 0,
           }}
           transition={{ duration: 0.2 }}

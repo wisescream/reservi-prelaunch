@@ -7,6 +7,12 @@ import { submitContactMessage } from "../../lib/firestore";
 import { trackEvent } from "../../lib/analytics";
 import { AliveValueCard, AliveContactRow } from "./alive";
 
+const TikTokIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
 export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
   return (
     <>
@@ -28,9 +34,18 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             <div className="mt-10">
               <div style={{ fontWeight: 700, color: "#1A1A1A" }} className="mb-3">Follow us</div>
               <div className="flex gap-3">
-                {[Instagram, Facebook, Linkedin, Twitter].map((Ic, i) => (
-                  <a key={i} href="#" className="w-11 h-11 rounded-xl border border-gray-200 hover:border-[#E8450A] hover:text-[#E8450A] text-[#555] grid place-items-center transition-colors">
-                    <Ic size={18} />
+                {[
+                  { Ic: Instagram, href: "https://www.instagram.com/reservi_app?igsh=MWRra3kxeGR5Nm50ZA%3D%3D&utm_source=qr" },
+                  { Ic: TikTokIcon, href: "https://www.tiktok.com/@reservi.io?_r=1&_t=ZS-95rjZzGYL4v" }
+                ].map((item, i) => (
+                  <a 
+                    key={i} 
+                    href={item.href} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 rounded-xl border border-gray-200 hover:border-[#E8450A] hover:text-[#E8450A] text-[#555] grid place-items-center transition-colors"
+                  >
+                    <item.Ic size={18} />
                   </a>
                 ))}
               </div>

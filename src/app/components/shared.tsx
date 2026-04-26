@@ -7,6 +7,7 @@ import { ReserviLogo } from "./logo";
 import { triggerCursorSuccess } from "./cursor";
 import { submitWaitlistSignup } from "../../lib/firestore";
 import { trackEvent } from "../../lib/analytics";
+import { useTranslation, Language } from "../../lib/translations";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -27,12 +28,14 @@ const Reveal = motion.div;
 type Page = "home" | "features" | "restaurants" | "about" | "contact" | "waitlist" | "partner";
 
 export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p: Page) => void }) {
+  const { lang, setLang, t } = useTranslation();
+  
   const links: { key: Page; label: string }[] = [
-    { key: "home", label: "Home" },
-    { key: "features", label: "Features" },
-    { key: "restaurants", label: "For Restaurants" },
-    { key: "about", label: "About" },
-    { key: "contact", label: "Contact" },
+    { key: "home", label: lang === "ar" ? "الرئيسية" : lang === "fr" ? "Accueil" : "Home" },
+    { key: "features", label: t("features") },
+    { key: "restaurants", label: t("for_restaurants") },
+    { key: "about", label: t("about") },
+    { key: "contact", label: t("contact") },
   ];
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<Page | null>(null);
@@ -108,7 +111,29 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            {/* Language Selector Dropdown */}
+            <div className="relative group">
+              <button 
+                className="flex items-center gap-1 px-3.5 py-2 rounded-full bg-[#F5F5F5]/70 hover:bg-gray-200 text-[#1A1A1A] transition-colors shadow-sm"
+                style={{ fontWeight: 700, fontSize: 13 }}
+              >
+                <span className="uppercase tracking-wider">{lang}</span>
+                <span className="text-[9px] opacity-60 group-hover:rotate-180 transition-transform duration-200">▼</span>
+              </button>
+              <div className="absolute right-0 mt-1 hidden group-hover:block bg-white shadow-xl rounded-xl py-1.5 border border-black/5 min-w-[80px] z-[9999] overflow-hidden">
+                {(["en", "fr", "ar"] as Language[]).map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    className={`w-full px-4 py-2 text-center text-xs font-bold hover:bg-gray-50 transition-colors ${lang === l ? 'text-[#E8450A]' : 'text-[#1A1A1A]'}`}
+                  >
+                    <span className="uppercase tracking-wider">{l}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
@@ -123,7 +148,7 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
                 transition={{ duration: 0.4 }}
               />
               <span className="relative inline-flex items-center gap-2">
-                Join Waitlist
+                {t("join_waitlist")}
                 <motion.span animate={{ x: [0, 3, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
                   <ArrowRight size={16} />
                 </motion.span>
@@ -307,7 +332,9 @@ export function StepCircle({ n }: { n: number }) {
 }
 
 export function EmailJoin({ dark }: { dark?: boolean }) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
+  
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^\S+@\S+\.\S+$/.test(email)) {
@@ -325,17 +352,18 @@ export function EmailJoin({ dark }: { dark?: boolean }) {
       console.error(error);
     }
   };
+
   return (
     <form onSubmit={submit} className="flex gap-2 w-full max-w-md">
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         type="email"
-        placeholder="Enter your email"
+        placeholder={t("email_placeholder")}
         className={`flex-1 px-4 py-3 rounded-lg outline-none ${dark ? "bg-white text-[#1A1A1A]" : "bg-white border border-gray-200 text-[#1A1A1A]"}`}
       />
       <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} type="submit" className="bg-[#E8450A] hover:bg-[#c93a08] text-white px-5 py-3 rounded-lg whitespace-nowrap" style={{ fontWeight: 600 }}>
-        Join Waitlist
+        {t("join_waitlist")}
       </motion.button>
     </form>
   );
@@ -367,6 +395,7 @@ const TikTokIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
+  const { t, lang } = useTranslation();
   const go = (p: Page) => onNavigate?.(p);
   const [activeModal, setActiveModal] = useState<"privacy" | "terms" | "cookies" | null>(null);
 
@@ -409,15 +438,15 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
           className="mb-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-12 border-b border-white/15"
         >
           <div>
-            <div style={{ fontWeight: 800, fontSize: 44, lineHeight: 1.05 }}>Hungry yet?</div>
-            <div className="text-white/80 mt-2">Join the waitlist and book your first table.</div>
+            <div style={{ fontWeight: 800, fontSize: 44, lineHeight: 1.05 }}>{t("hungry_yet")}</div>
+            <div className="text-white/80 mt-2">{t("hungry_desc")}</div>
           </div>
           <button
             onClick={() => go("waitlist")}
             className="bg-white text-[#8B1A00] px-7 py-4 rounded-lg inline-flex items-center gap-2 hover:bg-[#E8450A] hover:text-white transition-colors group"
             style={{ fontWeight: 700 }}
           >
-            Join the waitlist
+            {t("join_waitlist")}
             <ArrowUpRight size={20} className="group-hover:rotate-45 transition-transform" />
           </button>
         </motion.div>
@@ -435,7 +464,7 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
               </div>
             </div>
             <p className="text-white/80 max-w-sm">
-              Book the best tables in seconds. Reservi reimagines reservations for the way you actually dine.
+              {t("hero_title")} {t("hero_desc")}
             </p>
             <div className="mt-6 flex gap-3">
               {[
@@ -457,16 +486,16 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
             </div>
           </motion.div>
 
-          <FooterCol title="Product" items={[
-            { label: "Features", page: "features" as Page },
-            { label: "For Restaurants", page: "restaurants" as Page },
-            { label: "Partner With Us", page: "partner" as Page },
-            { label: "Waitlist", page: "waitlist" as Page },
+          <FooterCol title={t("product")} items={[
+            { label: t("features"), page: "features" as Page },
+            { label: t("for_restaurants"), page: "restaurants" as Page },
+            { label: t("partner_us"), page: "partner" as Page },
+            { label: t("waitlist"), page: "waitlist" as Page },
           ]} go={go} />
 
-          <FooterCol title="Company" items={[
-            { label: "About", page: "about" as Page },
-            { label: "Contact", page: "contact" as Page },
+          <FooterCol title={t("company")} items={[
+            { label: t("about"), page: "about" as Page },
+            { label: t("contact"), page: "contact" as Page },
           ]} go={go} />
 
           <motion.div
@@ -475,7 +504,7 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
             viewport={{ once: true }}
             className="md:col-span-3"
           >
-            <div style={{ fontWeight: 700 }} className="mb-4">Get in touch</div>
+            <div style={{ fontWeight: 700 }} className="mb-4">{t("get_in_touch")}</div>
             <ul className="space-y-2 text-white/80" style={{ fontSize: 14 }}>
               <li>reservifouders@gmail.com</li>
               <li>+212 784-115699</li>
