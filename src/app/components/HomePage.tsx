@@ -17,6 +17,35 @@ const fadeUp = {
 
 export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
   const { t, lang } = useTranslation();
+
+  const features = lang === "ar" ? [
+    { icon: <Phone size={26} />, title: "وداعاً للمكالمات الهاتفية", desc: "تخطى الانتظار - احجز بنقرة واحدة." },
+    { icon: <Clock size={26} />, title: "التوافر في الوقت الفعلي", desc: "شاهد الطاولات المتاحة فوراً وفي أي وقت." },
+    { icon: <CheckCircle2 size={26} />, title: "تأكيد فوري", desc: "احصل على تأكيد الحجز في ثوانٍ." },
+  ] : lang === "fr" ? [
+    { icon: <Phone size={26} />, title: "Fini les appels", desc: "Évitez l'attente - réservez en un seul clic." },
+    { icon: <Clock size={26} />, title: "Disponibilité réelle", desc: "Consultez les tables libres instantanément." },
+    { icon: <CheckCircle2 size={26} />, title: "Confirmé immédiatement", desc: "Confirmation de réservation en quelques secondes." },
+  ] : [
+    { icon: <Phone size={26} />, title: "No more phone calls", desc: "Skip the wait — reserve in just a tap." },
+    { icon: <Clock size={26} />, title: "Real-time availability", desc: "See open tables instantly, anytime." },
+    { icon: <CheckCircle2 size={26} />, title: "Confirmed instantly", desc: "Get booking confirmation in seconds." },
+  ];
+
+  const steps = lang === "ar" ? [
+    { n: 1, title: "ابحث عن مطعم", desc: "تصفح أفضل الأماكن بالقرب منك حسب الأجواء وحجم الطاولة." },
+    { n: 2, title: "احجز فوراً", desc: "اختر الوقت والعدد، وقم بالتأكيد ببضع نقرات." },
+    { n: 3, title: "احضر واستمتع", desc: "طاولتك جاهزة لحظة وصولك. لا انتظار ولا اتصالات." },
+  ] : lang === "fr" ? [
+    { n: 1, title: "Trouvez un restaurant", desc: "Découvrez des endroits sélectionnés selon vos envies." },
+    { n: 2, title: "Réservez", desc: "Choisissez l'heure, la taille de votre groupe et confirmez en un clic." },
+    { n: 3, title: "Venez & Profitez", desc: "Votre table est prête à votre arrivée. Ni attente, ni appels." },
+  ] : [
+    { n: 1, title: "Find a restaurant", desc: "Browse curated spots near you, filtered by mood, vibe, and table size." },
+    { n: 2, title: "Book instantly", desc: "Pick a time, party size, and confirm in just a few taps." },
+    { n: 3, title: "Show up & enjoy", desc: "Your table is ready the moment you walk in. No waiting, no calls." },
+  ];
+
   return (
     <>
       <Navbar current="home" onNavigate={onNavigate} />
@@ -57,11 +86,7 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       {/* Features strip */}
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-20 grid md:grid-cols-3 gap-8">
-          {[
-            { icon: <Phone size={26} />, title: "No more phone calls", desc: "Skip the wait — reserve in just a tap." },
-            { icon: <Clock size={26} />, title: "Real-time availability", desc: "See open tables instantly, anytime." },
-            { icon: <CheckCircle2 size={26} />, title: "Confirmed instantly", desc: "Get booking confirmation in seconds." },
-          ].map((f, i) => (
+          {features.map((f, i) => (
             <motion.div
               key={f.title}
               initial={{ opacity: 0, y: 24 }}
@@ -81,13 +106,11 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       {/* How it works */}
       <section className="bg-[#F5F5F5]">
         <div className="max-w-[1200px] mx-auto px-6 py-20">
-          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 40, color: "#1A1A1A" }} className="text-center mb-14">How it works</motion.h2>
+          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 40, color: "#1A1A1A" }} className="text-center mb-14">
+            {lang === "ar" ? "كيف يعمل؟" : lang === "fr" ? "Comment ça marche" : "How it works"}
+          </motion.h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { n: 1, title: "Find a restaurant", desc: "Browse curated spots near you, filtered by mood, vibe, and table size." },
-              { n: 2, title: "Book instantly", desc: "Pick a time, party size, and confirm in just a few taps." },
-              { n: 3, title: "Show up & enjoy", desc: "Your table is ready the moment you walk in. No waiting, no calls." },
-            ].map((s, i) => (
+            {steps.map((s, i) => (
               <StepCard key={s.n} n={s.n} title={s.title} desc={s.desc} delay={i * 0.12} />
             ))}
           </div>
@@ -99,9 +122,9 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
         <div className="max-w-[1200px] mx-auto px-6 py-20 grid md:grid-cols-4 gap-6">
           <SplitCard
             variant="diner"
-            title="For diners"
-            items={["Discover top restaurants", "Real-time table availability", "Instant confirmation"]}
-            ctaLabel="Join Waitlist"
+            title={lang === "ar" ? "للرواد" : lang === "fr" ? "Pour les Gourmets" : "For diners"}
+            items={lang === "ar" ? ["اكتشف أفضل المطاعم", "توافر الطاولات في الوقت الفعلي", "تأكيد فوري"] : lang === "fr" ? ["Découvrez les meilleurs restaurants", "Disponibilité en temps réel", "Confirmation immédiate"] : ["Discover top restaurants", "Real-time table availability", "Instant confirmation"]}
+            ctaLabel={t("join_waitlist")}
             onCta={() => onNavigate("waitlist")}
           />
           <motion.div
@@ -134,9 +157,9 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
           </motion.div>
           <SplitCard
             variant="restaurant"
-            title="For restaurants"
-            items={["Fill more tables daily", "Reduce no-shows", "Insightful analytics"]}
-            ctaLabel="Partner With Us"
+            title={t("for_restaurants")}
+            items={lang === "ar" ? ["املأ المزيد من الطاولات يومياً", "قلل من حالات عدم الحضور", "تحليلات مفصلة"] : lang === "fr" ? ["Remplissez plus de tables", "Réduisez les absences", "Analyses détaillées"] : ["Fill more tables daily", "Reduce no-shows", "Insightful analytics"]}
+            ctaLabel={lang === "ar" ? "كن شريكاً" : lang === "fr" ? "Devenir Partenaire" : "Partner With Us"}
             onCta={() => onNavigate("partner")}
           />
         </div>
@@ -145,8 +168,12 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       {/* City launch */}
       <section className="bg-[#1A1A1A] text-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-6 py-16 text-center">
-          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 36 }}>Launching soon in Casablanca</motion.h2>
-          <motion.p {...fadeUp} className="text-white/70 mt-3">Joining a curated list of incredible restaurants.</motion.p>
+          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 36 }}>
+            {lang === "ar" ? "قريباً في الدار البيضاء" : lang === "fr" ? "Lancement prochain à Casablanca" : "Launching soon in Casablanca"}
+          </motion.h2>
+          <motion.p {...fadeUp} className="text-white/70 mt-3">
+            {lang === "ar" ? "الانضمام إلى قائمة مختارة بعناية من أفضل المطاعم." : lang === "fr" ? "Rejoignez une sélection exclusive de restaurants incroyables." : "Joining a curated list of incredible restaurants."}
+          </motion.p>
           <div className="mt-10 relative overflow-hidden" style={{ maskImage: "linear-gradient(90deg, transparent, black 12%, black 88%, transparent)", WebkitMaskImage: "linear-gradient(90deg, transparent, black 12%, black 88%, transparent)" }}>
             <motion.div
               className="flex gap-16 whitespace-nowrap"

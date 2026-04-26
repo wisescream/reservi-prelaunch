@@ -7,7 +7,8 @@ import { ReserviLogo } from "./logo";
 import { triggerCursorSuccess } from "./cursor";
 import { submitWaitlistSignup } from "../../lib/firestore";
 import { trackEvent } from "../../lib/analytics";
-import { useTranslation, Language } from "../../lib/translations";
+export { useTranslation } from "../../lib/translations";
+import { Language } from "../../lib/translations";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },

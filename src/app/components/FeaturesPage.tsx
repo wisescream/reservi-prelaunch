@@ -1,5 +1,5 @@
 import { Clock, Sparkles, Zap, Settings, Star, Shield, Calendar, CheckCircle2, Heart } from "lucide-react";
-import { Navbar, PhoneMockup, Footer, Page } from "./shared";
+import { Navbar, PhoneMockup, Footer, Page, useTranslation } from "./shared";
 import { motion } from "motion/react";
 import { AliveFeatureCard, Counter, TiltCard } from "./alive";
 
@@ -13,7 +13,22 @@ const fadeUp = {
 };
 
 export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
-  const features = [
+  const { t, lang } = useTranslation();
+  const features = lang === "ar" ? [
+    { icon: <Clock size={26} />, title: "التوافر في الوقت الفعلي", desc: "تحديثات حية للطاولات المتاحة فور الحجز." },
+    { icon: <Sparkles size={26} />, title: "توصيات ذكية", desc: "اكتشف مطاعم مخصصة لتناسب ذوقك." },
+    { icon: <Zap size={26} />, title: "تأكيد فوري", desc: "احصل على إشعار فور حجز طاولتك." },
+    { icon: <Settings size={26} />, title: "إدارة سهلة", desc: "عدّل أو ألغِ حجزك بنقرة واحدة." },
+    { icon: <Star size={26} />, title: "وصول حصري", desc: "أوقات حصرية للأعضاء وقوائم تذوق خاصة." },
+    { icon: <Shield size={26} />, title: "آمن وموثوق", desc: "بياناتك ومعلومات الدفع آمنة دائماً." },
+  ] : lang === "fr" ? [
+    { icon: <Clock size={26} />, title: "Disponibilité réelle", desc: "Suivez les tables libres en direct." },
+    { icon: <Sparkles size={26} />, title: "Recommandations", desc: "Découvrez des restaurants adaptés à vos goûts." },
+    { icon: <Zap size={26} />, title: "Confirmation immédiate", desc: "Notification dès que la table est prête." },
+    { icon: <Settings size={26} />, title: "Gestion facile", desc: "Modifiez votre réservation en un clic." },
+    { icon: <Star size={26} />, title: "Accès exclusif", desc: "Créneaux membres et menus dégustation spéciaux." },
+    { icon: <Shield size={26} />, title: "Sécurisé & Fiable", desc: "Paiements et données constamment protégés." },
+  ] : [
     { icon: <Clock size={26} />, title: "Real-time availability", desc: "See open tables update live as guests book." },
     { icon: <Sparkles size={26} />, title: "Smart recommendations", desc: "Discover restaurants tailored to your taste." },
     { icon: <Zap size={26} />, title: "Instant confirmation", desc: "Get notified the moment your table is set." },
@@ -21,13 +36,14 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
     { icon: <Star size={26} />, title: "Exclusive access", desc: "Members-only times and special tasting menus." },
     { icon: <Shield size={26} />, title: "Secure & reliable", desc: "Your data and payment info are always safe." },
   ];
+
   return (
     <>
       <Navbar current="features" onNavigate={onNavigate} />
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
           <motion.h2 initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ fontWeight: 800, fontSize: 48, color: "#1A1A1A", lineHeight: 1.15 }}>
-            Everything you need for the perfect dining experience
+            {lang === "ar" ? "كل ما تحتاجه لتجربة طعام مثالية" : lang === "fr" ? "Tout ce dont vous avez besoin pour une sortie réussie" : "Everything you need for the perfect dining experience"}
           </motion.h2>
           <div className="relative h-[520px]">
             <div className="absolute left-0 top-6"><PhoneMockup image={heroFood} /></div>
@@ -45,13 +61,23 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
 
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-20 text-center">
-          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 40, color: "#1A1A1A" }} className="mb-12">A better way to dine out</motion.h2>
+          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 40, color: "#1A1A1A" }} className="mb-12">
+            {lang === "ar" ? "طريقة أفضل لتناول الطعام خارج المنزل" : lang === "fr" ? "Une meilleure façon de dîner" : "A better way to dine out"}
+          </motion.h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
+            {(lang === "ar" ? [
+              { icon: <Calendar size={28} />, n: 1000, suffix: "+", l: "مطعم" },
+              { icon: <CheckCircle2 size={28} />, n: 5000, suffix: "+", l: "حجز" },
+              { icon: <Heart size={28} />, n: 98, suffix: "%", l: "رواد سعداء" },
+            ] : lang === "fr" ? [
+              { icon: <Calendar size={28} />, n: 1000, suffix: "+", l: "Restaurants" },
+              { icon: <CheckCircle2 size={28} />, n: 5000, suffix: "+", l: "Réservations" },
+              { icon: <Heart size={28} />, n: 98, suffix: "%", l: "Clients satisfaits" },
+            ] : [
               { icon: <Calendar size={28} />, n: 1000, suffix: "+", l: "Restaurants" },
               { icon: <CheckCircle2 size={28} />, n: 5000, suffix: "+", l: "Reservations" },
               { icon: <Heart size={28} />, n: 98, suffix: "%", l: "Happy diners" },
-            ].map((s, i) => (
+            ]).map((s, i) => (
               <TiltCard key={s.l} intensity={6}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.85 }}
