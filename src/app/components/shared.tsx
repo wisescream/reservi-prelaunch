@@ -7,8 +7,8 @@ import { ReserviLogo } from "./logo";
 import { triggerCursorSuccess } from "./cursor";
 import { submitWaitlistSignup } from "../../lib/firestore";
 import { trackEvent } from "../../lib/analytics";
-export { useTranslation } from "../../lib/translations";
-import { Language } from "../../lib/translations";
+import { useTranslation, Language } from "../../lib/translations";
+export { useTranslation };
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -212,6 +212,23 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
                     {l.label}
                   </motion.button>
                 ))}
+                <div className="flex items-center gap-2 mt-2 px-4 py-2 bg-[#F5F5F5]/60 rounded-lg">
+                  <span className="text-xs font-extrabold text-gray-400 uppercase tracking-wider">{lang === "ar" ? "اللغة:" : lang === "fr" ? "Langue:" : "Language:"}</span>
+                  <div className="flex gap-1 items-center ml-auto">
+                    {(["en", "fr", "ar"] as Language[]).map((l) => (
+                      <button
+                        key={l}
+                        onClick={() => {
+                          setLang(l);
+                        }}
+                        className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all ${lang === l ? 'bg-[#E8450A] text-white' : 'text-[#1A1A1A] hover:bg-gray-200'}`}
+                      >
+                        {l}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <button
                   onClick={() => {
                     onNavigate("waitlist");

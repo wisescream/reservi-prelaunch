@@ -18,9 +18,17 @@ import { ScrollDepthTracker } from "../components/ScrollDepthTracker";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { TranslationProvider } from "../lib/translations";
 
+import { useState, useEffect } from "react";
+
 function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleNavigate = (p: Page) => {
     if (p === "home") {
@@ -30,6 +38,10 @@ function AppContent() {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="min-h-screen w-full bg-white" style={{ fontFamily: "Inter, 'Plus Jakarta Sans', sans-serif" }}>

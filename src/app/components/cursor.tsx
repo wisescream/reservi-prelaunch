@@ -127,7 +127,7 @@ export function KnifeForkCursor() {
   if (!isDesktop) return null;
 
   const baseScale =
-    mode === "button" || mode === "submit" || mode === "image" ? 1.25 :
+    mode === "button" || mode === "submit" || mode === "image" ? 1.05 :
     mode === "text" ? 0.75 : 0.8;
   const scale = pressed ? baseScale * 0.75 : baseScale;
 
@@ -224,7 +224,7 @@ export function KnifeForkCursor() {
             <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#E8450A]"
               initial={{ width: 0, height: 0, opacity: 0 }}
-              animate={{ width: 56, height: 56, opacity: 0.5 }}
+              animate={{ width: 44, height: 44, opacity: 0.5 }}
             />
           )}
         </motion.div>
