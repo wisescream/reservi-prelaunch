@@ -360,9 +360,31 @@ export function EmailBanner() {
   );
 }
 
+const TikTokIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
 export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
   const go = (p: Page) => onNavigate?.(p);
-  const linkCls = "inline-flex items-center gap-1 text-white/80 hover:text-white transition-colors group";
+  const [activeModal, setActiveModal] = useState<"privacy" | "terms" | "cookies" | null>(null);
+
+  const policies = {
+    privacy: {
+      title: "Privacy Policy",
+      content: "At Reservi, we prioritize your privacy. We collect minimal data required to securely process waitlist reservations and optimize application performance. Your information is never sold or distributed maliciously."
+    },
+    terms: {
+      title: "Terms of Service",
+      content: "By accessing the Reservi prelaunch framework, you agree to comply with operational guidelines. Waitlist statuses represent exclusive access prioritization and do not guarantee instantaneous placement configurations."
+    },
+    cookies: {
+      title: "Cookies Policy",
+      content: "Reservi utilizes localized caching tokens to maintain preferences securely. Analytics tracking improves application navigation metrics comfortably."
+    }
+  };
+
   return (
     <footer className="relative bg-gradient-to-br from-[#8B1A00] via-[#a02000] to-[#5e1100] text-white overflow-hidden">
       {/* animated decorative blobs */}
@@ -416,15 +438,20 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
               Book the best tables in seconds. Reservi reimagines reservations for the way you actually dine.
             </p>
             <div className="mt-6 flex gap-3">
-              {[Instagram, Facebook, Linkedin, Twitter].map((Ic, i) => (
+              {[
+                { Ic: Instagram, href: "https://www.instagram.com/reservi_app?igsh=MWRra3kxeGR5Nm50ZA%3D%3D&utm_source=qr" },
+                { Ic: TikTokIcon, href: "https://www.tiktok.com/@reservi.io?_r=1&_t=ZS-95rjZzGYL4v" }
+              ].map((item, i) => (
                 <motion.a
                   key={i}
-                  href="#"
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ y: -4, backgroundColor: "rgba(232,69,10,1)" }}
                   style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
                   className="w-11 h-11 rounded-xl grid place-items-center"
                 >
-                  <Ic size={18} />
+                  <item.Ic size={18} />
                 </motion.a>
               ))}
             </div>
@@ -467,9 +494,9 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
         >
           <div>© 2026 Reservi. All rights reserved.</div>
           <div className="flex gap-6">
-            <span className="hover:text-white cursor-pointer">Privacy</span>
-            <span className="hover:text-white cursor-pointer">Terms</span>
-            <span className="hover:text-white cursor-pointer">Cookies</span>
+            <span onClick={() => setActiveModal("privacy")} className="hover:text-white cursor-pointer transition-colors">Privacy</span>
+            <span onClick={() => setActiveModal("terms")} className="hover:text-white cursor-pointer transition-colors">Terms</span>
+            <span onClick={() => setActiveModal("cookies")} className="hover:text-white cursor-pointer transition-colors">Cookies</span>
           </div>
         </motion.div>
       </div>
@@ -484,6 +511,46 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
       >
         RESERVI
       </motion.div>
+
+      {/* Policy Overlay Modal */}
+      <AnimatePresence>
+        {activeModal && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }} 
+              animate={{ scale: 1, opacity: 1, y: 0 }} 
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="w-full max-w-md bg-[#1A1A1A] text-white p-8 rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#E8450A]/20 blur-xl" />
+              
+              <div className="relative">
+                <h3 style={{ fontWeight: 800, fontSize: 24 }} className="mb-4 text-white">
+                  {policies[activeModal].title}
+                </h3>
+                <p className="text-white/80 leading-relaxed" style={{ fontSize: 15 }}>
+                  {policies[activeModal].content}
+                </p>
+                
+                <button 
+                  onClick={() => setActiveModal(null)}
+                  className="mt-6 w-full bg-[#E8450A] hover:bg-[#FF5722] text-white py-3 rounded-xl transition-colors"
+                  style={{ fontWeight: 600 }}
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }
