@@ -30,7 +30,7 @@ export interface ContactData {
 /**
  * Helper to trigger automated confirmation emails via Vercel API
  */
-const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partner") => {
+const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partner" | "contact") => {
   try {
     const response = await fetch("/api/send-confirmation", {
       method: "POST",
@@ -46,6 +46,7 @@ const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partn
     console.error("Error triggering confirmation email:", error);
   }
 };
+
 
 /**
  * Submits a new sign-up to the waitlist_signups collection
@@ -97,7 +98,7 @@ export const submitPartnerRequest = async (data: PartnerData) => {
  */
 export const submitContactMessage = async (data: ContactData) => {
   const colRef = collection(db, "contact_messages");
-  return addDoc(colRef, {
+  const docRef = await addDoc(colRef, {
     name: data.name,
     email: data.email,
     subject: data.subject,
@@ -105,4 +106,10 @@ export const submitContactMessage = async (data: ContactData) => {
     read: false,
     submitted_at: serverTimestamp(),
   });
+
+  // Trigger email confirmation in the background
+  triggerConfirmationEmail(data.email, "contact");
+
+  return docRef;
 };
+
