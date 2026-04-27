@@ -370,7 +370,7 @@ export function RestaurantsPage({ onNavigate }: { onNavigate: (p: Page) => void 
 
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-12 text-center" style={{ color: "#555555" }}>
-          Have questions? Contact our team at <span style={{ color: "#E8450A", fontWeight: 600 }}>hello@reservi.com</span>
+          Have questions? Contact our team at <span style={{ color: "#E8450A", fontWeight: 600 }}>admin@reservi-eat.ma</span>
         </div>
       </section>
 
@@ -441,7 +441,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             <p style={{ color: "#555555", fontSize: 17 }} className="mt-4">We'd love to hear from you. Fill out the form or reach us directly.</p>
             <div className="mt-10 space-y-6">
               {[
-                { icon: <Mail size={20} />, label: "Email", value: "reservifouders@gmail.com" },
+                { icon: <Mail size={20} />, label: "Email", value: "admin@reservi-eat.ma" },
                 { icon: <Phone size={20} />, label: "Phone", value: "+212 784-115699" },
                 { icon: <MapPin size={20} />, label: "Address", value: "Casablanca, Morocco" },
               ].map((c, i) => (

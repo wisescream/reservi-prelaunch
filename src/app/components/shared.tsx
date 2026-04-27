@@ -41,6 +41,8 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<Page | null>(null);
   const [open, setOpen] = useState(false);
+  const [langOpenDesktop, setLangOpenDesktop] = useState(false);
+  const [langOpenMobile, setLangOpenMobile] = useState(false);
   const { scrollYProgress } = useScroll();
   const progressX = useSpring(scrollYProgress, { stiffness: 120, damping: 24 });
 
@@ -122,25 +124,42 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
 
           <div className="flex items-center gap-3">
             {/* Language Selector Dropdown */}
-            <div className="relative group">
+            <div 
+              className="relative"
+              onMouseEnter={() => setLangOpenDesktop(true)}
+              onMouseLeave={() => setLangOpenDesktop(false)}
+            >
               <button 
+                onClick={() => setLangOpenDesktop(!langOpenDesktop)}
                 className="flex items-center gap-1 px-3.5 py-2 rounded-full bg-[#F5F5F5]/70 hover:bg-gray-200 text-[#1A1A1A] transition-colors shadow-sm"
                 style={{ fontWeight: 700, fontSize: 13 }}
               >
                 <span className="uppercase tracking-wider">{lang}</span>
-                <span className="text-[9px] opacity-60 group-hover:rotate-180 transition-transform duration-200">▼</span>
+                <span className={`text-[9px] opacity-60 transition-transform duration-200 ${langOpenDesktop ? 'rotate-180' : ''}`}>▼</span>
               </button>
-              <div className="absolute right-0 mt-1 hidden group-hover:block bg-white shadow-xl rounded-xl py-1.5 border border-black/5 min-w-[80px] z-[9999] overflow-hidden">
-                {(["en", "fr", "ar"] as Language[]).map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => setLang(l)}
-                    className={`w-full px-4 py-2 text-center text-xs font-bold hover:bg-gray-50 transition-colors ${lang === l ? 'text-[#E8450A]' : 'text-[#1A1A1A]'}`}
+              <AnimatePresence>
+                {langOpenDesktop && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute right-0 mt-1 bg-white shadow-xl rounded-xl py-1.5 border border-black/5 min-w-[80px] z-[9999] overflow-hidden"
                   >
-                    <span className="uppercase tracking-wider">{l}</span>
-                  </button>
-                ))}
-              </div>
+                    {(["en", "fr", "ar"] as Language[]).map((l) => (
+                      <button
+                        key={l}
+                        onClick={() => {
+                          setLang(l);
+                          setLangOpenDesktop(false);
+                        }}
+                        className={`w-full px-4 py-2 text-center text-xs font-bold hover:bg-gray-50 transition-colors ${lang === l ? 'text-[#E8450A]' : 'text-[#1A1A1A]'}`}
+                      >
+                        <span className="uppercase tracking-wider">{l}</span>
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <motion.button
@@ -220,22 +239,7 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
                     {l.label}
                   </motion.button>
                 ))}
-                <div className="flex items-center gap-2 mt-2 px-4 py-2 bg-[#F5F5F5]/60 rounded-lg">
-                  <span className="text-xs font-extrabold text-gray-400 uppercase tracking-wider">{lang === "ar" ? "اللغة:" : lang === "fr" ? "Langue:" : "Language:"}</span>
-                  <div className="flex gap-1 items-center ml-auto">
-                    {(["en", "fr", "ar"] as Language[]).map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => {
-                          setLang(l);
-                        }}
-                        className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all ${lang === l ? 'bg-[#E8450A] text-white' : 'text-[#1A1A1A] hover:bg-gray-200'}`}
-                      >
-                        {l}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+
 
                 <button
                   onClick={() => {
@@ -380,7 +384,7 @@ export function EmailJoin({ dark }: { dark?: boolean }) {
   };
 
   return (
-    <form onSubmit={submit} className="flex gap-2 w-full max-w-md">
+    <form onSubmit={submit} className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -388,7 +392,13 @@ export function EmailJoin({ dark }: { dark?: boolean }) {
         placeholder={t("email_placeholder")}
         className={`flex-1 px-4 py-3 rounded-lg outline-none ${dark ? "bg-white text-[#1A1A1A]" : "bg-white border border-gray-200 text-[#1A1A1A]"}`}
       />
-      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} type="submit" className="bg-[#E8450A] hover:bg-[#c93a08] text-white px-5 py-3 rounded-lg whitespace-nowrap" style={{ fontWeight: 600 }}>
+      <motion.button 
+        whileHover={{ scale: 1.04 }} 
+        whileTap={{ scale: 0.96 }} 
+        type="submit" 
+        className="bg-[#E8450A] hover:bg-[#c93a08] text-white px-5 py-3 rounded-lg whitespace-nowrap w-full sm:w-auto" 
+        style={{ fontWeight: 600 }}
+      >
         {t("join_waitlist")}
       </motion.button>
     </form>
@@ -396,16 +406,18 @@ export function EmailJoin({ dark }: { dark?: boolean }) {
 }
 
 export function EmailBanner() {
+  const { t } = useTranslation();
+  
   return (
     <section className="bg-[#8B1A00] text-white">
       <div className="max-w-[1200px] mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-white/10 grid place-items-center">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-start">
+          <div className="w-12 h-12 rounded-full bg-white/10 grid place-items-center shrink-0">
             <Mail size={22} />
           </div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 20 }}>Be the first to know</div>
-            <div className="text-white/80">Get early access when we launch in your city.</div>
+            <div className="text-lg sm:text-xl font-bold">{t("be_first_to_know")}</div>
+            <div className="text-white/80 text-sm sm:text-base mt-1">{t("early_access_desc")}</div>
           </div>
         </div>
         <EmailJoin dark />
@@ -532,7 +544,7 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
           >
             <div style={{ fontWeight: 700 }} className="mb-4">{t("get_in_touch")}</div>
             <ul className="space-y-2 text-white/80" style={{ fontSize: 14 }}>
-              <li>reservifouders@gmail.com</li>
+              <li>admin@reservi-eat.ma</li>
               <li>+212 784-115699</li>
               <li>Casablanca, Morocco</li>
             </ul>

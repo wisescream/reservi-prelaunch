@@ -173,7 +173,7 @@ export function RestaurantsPage({ onNavigate }: { onNavigate: (p: Page) => void 
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-12 text-center" style={{ color: "#555555" }}>
           {lang === "ar" ? "هل لديك أسئلة؟ اتصل بفريقنا على " : lang === "fr" ? "Des questions ? Contactez notre équipe à " : "Have questions? Contact our team at "}
-          <span style={{ color: "#E8450A", fontWeight: 600 }}>hello@reservi.com</span>
+          <span style={{ color: "#E8450A", fontWeight: 600 }}>admin@reservi-eat.ma</span>
         </div>
       </section>
 

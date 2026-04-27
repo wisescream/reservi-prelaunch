@@ -37,7 +37,9 @@ const translations: Record<Language, Record<string, string>> = {
     email_placeholder: "Email Address",
     message_placeholder: "Message",
     send_message: "Send Message",
-    success_message: "Message Sent!"
+    success_message: "Message Sent!",
+    be_first_to_know: "Be the first to know",
+    early_access_desc: "Get early access when we launch in your city."
   },
   fr: {
     features: "Fonctionnalités",
@@ -66,7 +68,9 @@ const translations: Record<Language, Record<string, string>> = {
     email_placeholder: "Adresse e-mail",
     message_placeholder: "Message",
     send_message: "Envoyer le Message",
-    success_message: "Message Envoyé!"
+    success_message: "Message Envoyé!",
+    be_first_to_know: "Soyez le premier à savoir",
+    early_access_desc: "Bénéficiez d'un accès anticipé lors de notre lancement dans votre ville."
   },
   ar: {
     features: "المميزات",
@@ -95,7 +99,9 @@ const translations: Record<Language, Record<string, string>> = {
     email_placeholder: "البريد الإلكتروني",
     message_placeholder: "الرسالة",
     send_message: "إرسال الرسالة",
-    success_message: "تم الإرسال بنجاح!"
+    success_message: "تم الإرسال بنجاح!",
+    be_first_to_know: "كن أول من يعلم",
+    early_access_desc: "احصل على وصول مبكر عندما ننطلق في مدينتك."
   }
 };
 

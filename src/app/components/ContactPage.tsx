@@ -20,7 +20,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
     title: "تواصل معنا",
     desc: "يسعدنا سماع رأيك. املأ النموذج أو تواصل معنا مباشرة.",
     rows: [
-      { icon: <Mail size={20} />, label: "البريد الإلكتروني", value: "reservifouders@gmail.com" },
+      { icon: <Mail size={20} />, label: "البريد الإلكتروني", value: "admin@reservi-eat.ma" },
       { icon: <Phone size={20} />, label: "الهاتف", value: "+212 784-115699" },
       { icon: <MapPin size={20} />, label: "العنوان", value: "الدار البيضاء، المغرب" },
     ],
@@ -29,7 +29,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
     title: "Contactez-nous",
     desc: "Nous serions ravis de vous entendre. Remplissez le formulaire ou écrivez-nous.",
     rows: [
-      { icon: <Mail size={20} />, label: "Email", value: "reservifouders@gmail.com" },
+      { icon: <Mail size={20} />, label: "Email", value: "admin@reservi-eat.ma" },
       { icon: <Phone size={20} />, label: "Téléphone", value: "+212 784-115699" },
       { icon: <MapPin size={20} />, label: "Adresse", value: "Casablanca, Maroc" },
     ],
@@ -38,7 +38,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
     title: "Get in touch",
     desc: "We'd love to hear from you. Fill out the form or reach us directly.",
     rows: [
-      { icon: <Mail size={20} />, label: "Email", value: "reservifouders@gmail.com" },
+      { icon: <Mail size={20} />, label: "Email", value: "admin@reservi-eat.ma" },
       { icon: <Phone size={20} />, label: "Phone", value: "+212 784-115699" },
       { icon: <MapPin size={20} />, label: "Address", value: "Casablanca, Morocco" },
     ],

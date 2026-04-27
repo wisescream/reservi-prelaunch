@@ -28,17 +28,42 @@ export interface ContactData {
 }
 
 /**
+ * Helper to trigger automated confirmation emails via Vercel API
+ */
+const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partner") => {
+  try {
+    const response = await fetch("/api/send-confirmation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, type }),
+    });
+    if (!response.ok) {
+      console.error("Failed to trigger confirmation email:", await response.text());
+    }
+  } catch (error) {
+    console.error("Error triggering confirmation email:", error);
+  }
+};
+
+/**
  * Submits a new sign-up to the waitlist_signups collection
  * Enforces schema: email, source_page, status (default: 'pending'), signed_up_at
  */
 export const submitWaitlistSignup = async (data: WaitlistData) => {
   const colRef = collection(db, "waitlist_signups");
-  return addDoc(colRef, {
+  const docRef = await addDoc(colRef, {
     email: data.email,
     source_page: data.sourcePage,
     status: "pending",
     signed_up_at: serverTimestamp(),
   });
+  
+  // Trigger email confirmation in the background
+  triggerConfirmationEmail(data.email, "waitlist");
+  
+  return docRef;
 };
 
 /**
@@ -47,7 +72,7 @@ export const submitWaitlistSignup = async (data: WaitlistData) => {
  */
 export const submitPartnerRequest = async (data: PartnerData) => {
   const colRef = collection(db, "partner_requests");
-  return addDoc(colRef, {
+  const docRef = await addDoc(colRef, {
     restaurant_name: data.restaurantName,
     contact_email: data.contactEmail,
     your_name: data.yourName || "",
@@ -58,7 +83,13 @@ export const submitPartnerRequest = async (data: PartnerData) => {
     status: "new",
     submitted_at: serverTimestamp(),
   });
+
+  // Trigger email confirmation in the background
+  triggerConfirmationEmail(data.contactEmail, "partner");
+
+  return docRef;
 };
+
 
 /**
  * Submits a contact form message to the contact_messages collection
