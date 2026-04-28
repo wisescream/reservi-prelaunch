@@ -73,7 +73,7 @@ export function AboutPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
               }}
             >
               <video 
-                src="https://assets.mixkit.co/videos/preview/mixkit-chef-cutting-vegetables-in-slow-motion-41665-large.mp4" 
+                src="/about-video.mp4" 
                 className="w-full h-full object-cover opacity-80" 
                 loop 
                 muted 
