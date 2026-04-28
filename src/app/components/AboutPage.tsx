@@ -1,13 +1,16 @@
-import { Target, Eye, Heart, Play } from "lucide-react";
+import { Target, Eye, Heart, Play, Pause } from "lucide-react";
 import { Navbar, Footer, Page, useTranslation } from "./shared";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { AliveValueCard } from "./alive";
+import { useState, useRef } from "react";
 
 const restaurantVideo = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200";
 
 export function AboutPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
   const { t, lang } = useTranslation();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const story = lang === "ar" ? {
     label: "قصتنا",
@@ -60,36 +63,55 @@ export function AboutPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             </div>
             <div 
               data-cursor="image" 
-              className="relative rounded-2xl overflow-hidden h-[440px] bg-[#1A1A1A] group cursor-pointer"
-              onClick={(e) => {
-                const video = e.currentTarget.querySelector("video");
-                if (video) {
-                  if (video.paused) {
-                    video.play();
+              className="relative rounded-2xl overflow-hidden h-[440px] bg-[#1A1A1A] group cursor-pointer shadow-xl"
+              onClick={() => {
+                if (videoRef.current) {
+                  if (isPlaying) {
+                    videoRef.current.pause();
+                    setIsPlaying(false);
                   } else {
-                    video.pause();
+                    videoRef.current.play();
+                    setIsPlaying(true);
                   }
                 }
               }}
             >
               <video 
+                ref={videoRef}
                 src="/about-video.mp4" 
-                className="w-full h-full object-cover opacity-80" 
+                className="w-full h-full object-cover transition-opacity duration-300" 
+                style={{ opacity: isPlaying ? 1 : 0.7 }}
                 loop 
-                muted 
                 playsInline
               />
-              <div className="absolute inset-0 grid place-items-center bg-black/20 group-hover:bg-black/40 transition-colors">
-                <motion.button
-                  whileHover={{ scale: 1.15 }}
-                  whileTap={{ scale: 0.95 }}
-                  animate={{ boxShadow: ["0 0 0 0 rgba(232,69,10,0.6)", "0 0 0 24px rgba(232,69,10,0)"] }}
-                  transition={{ boxShadow: { duration: 1.6, repeat: Infinity } }}
-                  className="w-20 h-20 rounded-full bg-[#E8450A] text-white grid place-items-center shadow-2xl"
-                >
-                  <Play size={32} fill="white" />
-                </motion.button>
-              </div>
+              <AnimatePresence>
+                {!isPlaying && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 grid place-items-center bg-black/40 group-hover:bg-black/50 transition-colors"
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.95 }}
+                      animate={{ boxShadow: ["0 0 0 0 rgba(232,69,10,0.6)", "0 0 0 24px rgba(232,69,10,0)"] }}
+                      transition={{ boxShadow: { duration: 1.6, repeat: Infinity } }}
+                      className="w-20 h-20 rounded-full bg-[#E8450A] text-white grid place-items-center shadow-2xl"
+                    >
+                      <Play size={32} fill="white" />
+                    </motion.button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {isPlaying && (
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white grid place-items-center border border-white/10">
+                    <Pause size={18} fill="white" />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
