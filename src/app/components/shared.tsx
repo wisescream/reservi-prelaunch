@@ -293,36 +293,99 @@ export function SecondaryButton({ children, onClick }: { children: React.ReactNo
 
 export function PhoneMockup({ image, className = "", fetchpriority }: { image?: string; className?: string; fetchpriority?: "high" | "low" | "auto" }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, rotate: -2 }}
-      animate={{ opacity: 1, y: [0, -8, 0], rotate: 0 }}
-      transition={{ opacity: { duration: 0.8 }, rotate: { duration: 0.8 }, y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
-      className={`relative ${className}`} style={{ width: 280, height: 560 }}>
-      <div className="absolute inset-0 rounded-[40px] bg-[#1A1A1A] p-2 shadow-2xl">
-        <div className="w-full h-full rounded-[32px] overflow-hidden relative bg-gray-800">
-          <ImageWithFallback
-            src={image || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600"}
-            alt="Restaurant"
-            className="w-full h-full object-cover"
-            {...({ fetchpriority } as any)}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full" />
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="absolute bottom-6 left-4 right-4 bg-white/95 backdrop-blur rounded-2xl p-4">
-            <div className="text-xs text-[#555]" style={{ fontWeight: 500 }}>Tonight, 7:30 PM</div>
-            <div style={{ fontWeight: 700, color: "#1A1A1A" }} className="mt-1">Bella Italia</div>
-            <div className="flex gap-2 mt-3">
-              <span className="text-xs px-2 py-1 rounded bg-[#E8450A] text-white">Available</span>
-              <span className="text-xs px-2 py-1 rounded bg-gray-100 text-[#555]">2 guests</span>
+    <div style={{ perspective: 1500 }} className={`flex items-center justify-center ${className}`}>
+      <motion.div
+        initial={{ opacity: 0, rotateY: 0, rotateX: 0 }}
+        animate={{ 
+          opacity: 1, 
+          rotateY: -25, 
+          rotateX: 12, 
+          rotateZ: -4,
+          y: [0, -10, 0]
+        }}
+        transition={{ 
+          opacity: { duration: 0.8 }, 
+          y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+          rotateY: { duration: 0.8 },
+          rotateX: { duration: 0.8 },
+          rotateZ: { duration: 0.8 }
+        }}
+        style={{ 
+          width: 280, 
+          height: 560, 
+          transformStyle: "preserve-3d",
+        }}
+        className="relative"
+      >
+        {/* Phone Shadow */}
+        <div 
+          className="absolute -inset-6 bg-black/50 blur-2xl rounded-[40px]" 
+          style={{ 
+            transform: "translateZ(-50px) translateY(40px) scale(0.85)",
+          }} 
+        />
+
+        {/* Phone Edge/Thickness (3D Effect) */}
+        <div 
+          className="absolute inset-0 rounded-[40px] bg-[#2A2A2A] border border-white/10" 
+          style={{ transform: "translateZ(-1px)" }} 
+        />
+        <div 
+          className="absolute inset-0 rounded-[40px] bg-[#222222]" 
+          style={{ transform: "translateZ(-2px)" }} 
+        />
+        <div 
+          className="absolute inset-0 rounded-[40px] bg-[#1F1F1F]" 
+          style={{ transform: "translateZ(-3px)" }} 
+        />
+        <div 
+          className="absolute inset-0 rounded-[40px] bg-[#1A1A1A]" 
+          style={{ transform: "translateZ(-4px)" }} 
+        />
+
+        {/* Main Phone Body */}
+        <div 
+          className="absolute inset-0 rounded-[40px] bg-[#0f0f0f] p-[10px] shadow-2xl border border-white/10"
+          style={{ transform: "translateZ(0px)" }}
+        >
+          <div className="w-full h-full rounded-[32px] overflow-hidden relative bg-gray-950 border border-white/5">
+            <ImageWithFallback
+              src={image || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600"}
+              alt="Restaurant"
+              className="w-full h-full object-cover"
+              {...({ fetchpriority } as any)}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+            
+            {/* Dynamic Island */}
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full border border-white/10 z-20 flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-blue-500/30 blur-[1px] mr-2" />
             </div>
-          </motion.div>
+
+            {/* Content Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="absolute bottom-6 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/20"
+            >
+              <div className="text-xs text-[#555]" style={{ fontWeight: 600 }}>Tonight, 7:30 PM</div>
+              <div style={{ fontWeight: 800, color: "#1A1A1A", fontSize: 16 }} className="mt-1">Bella Italia</div>
+              <div className="flex gap-2 mt-3">
+                <span className="text-xs font-semibold px-2 py-1 rounded bg-[#E8450A] text-white">Available</span>
+                <span className="text-xs font-semibold px-2 py-1 rounded bg-gray-100 text-[#555]">2 guests</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </motion.div>
+
+        {/* Screen Glare */}
+        <div 
+          className="absolute inset-0 rounded-[40px] bg-gradient-to-tr from-white/0 via-white/5 to-white/20 pointer-events-none" 
+          style={{ transform: "translateZ(5px)" }} 
+        />
+      </motion.div>
+    </div>
   );
 }
 

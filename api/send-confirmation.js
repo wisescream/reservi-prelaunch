@@ -18,46 +18,46 @@ export default async function handler(request, response) {
   let bodyContent = '';
 
   if (type === 'waitlist') {
-    subject = 'Welcome to the Reservi Waitlist! 🍽️';
+    subject = 'Reservi Waitlist Confirmation';
     bodyContent = `
-      <h2 style="color: #111827; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">You're on the list!</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 20px;">
-        We are absolutely thrilled to have you join the Reservi Waitlist.
+      <h2 style="color: #111827; font-size: 18px; font-weight: 600; margin-top: 0; margin-bottom: 12px;">You're on the list!</h2>
+      <p style="font-size: 15px; color: #374151; margin-bottom: 16px;">
+        We have successfully added you to the Reservi Waitlist.
       </p>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 20px;">
-        Reservi is completely reimagining the way you discover, book, and experience the finest venues. We are launching soon in Casablanca, and you will be the very first to enjoy early access privileges.
+      <p style="font-size: 15px; color: #374151; margin-bottom: 16px;">
+        Reservi is launching soon in Casablanca, and you will be among the first to enjoy early access privileges.
       </p>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 0;">
+      <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
         Cheers,<br>
         <strong>The Reservi Team</strong>
       </p>
     `;
   } else if (type === 'partner') {
-    subject = 'Reservi - Partner Application Received 🤝';
+    subject = 'Reservi Partner Application Received';
     bodyContent = `
-      <h2 style="color: #111827; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Thank you for your request!</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 20px;">
-        We have successfully received your application to join the Reservi Restaurant Network.
+      <h2 style="color: #111827; font-size: 18px; font-weight: 600; margin-top: 0; margin-bottom: 12px;">Thank you for your request!</h2>
+      <p style="font-size: 15px; color: #374151; margin-bottom: 16px;">
+        We have received your application to join the Reservi Restaurant Network.
       </p>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 20px;">
-        Our dedicated business development team is currently reviewing your details. We will reach out to you within 2 business days to proceed with the next steps.
+      <p style="font-size: 15px; color: #374151; margin-bottom: 16px;">
+        Our team is currently reviewing your details and will reach out to you within 2 business days.
       </p>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 0;">
+      <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
         Warmly,<br>
         <strong>The Reservi Team</strong>
       </p>
     `;
   } else if (type === 'contact') {
-    subject = 'We received your message! ✉️';
+    subject = 'Reservi Support - Message Received';
     bodyContent = `
-      <h2 style="color: #111827; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Message Received!</h2>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 20px;">
-        Thank you for reaching out to us. We have received your message securely.
+      <h2 style="color: #111827; font-size: 18px; font-weight: 600; margin-top: 0; margin-bottom: 12px;">Message Received!</h2>
+      <p style="font-size: 15px; color: #374151; margin-bottom: 16px;">
+        Thank you for reaching out to us. We have received your message.
       </p>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 20px;">
-        Our support coordinators are reviewing your inquiry, and will follow up via this address as promptly as possible.
+      <p style="font-size: 15px; color: #374151; margin-bottom: 16px;">
+        Our support coordinators are reviewing your inquiry and will follow up as promptly as possible.
       </p>
-      <p style="font-size: 15px; line-height: 1.6; color: #4B5563; margin-bottom: 0;">
+      <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
         Best regards,<br>
         <strong>The Reservi Support Team</strong>
       </p>
@@ -67,19 +67,12 @@ export default async function handler(request, response) {
   }
 
   const htmlTemplate = `
-    <div style="background-color: #F9FAFB; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-      <div style="max-width: 500px; margin: 0 auto; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid #F3F4F6;">
-        <div style="background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%); padding: 35px 20px; text-align: center;">
-          <h1 style="color: #FFFFFF; margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -1px;">Reservi</h1>
-        </div>
-        <div style="padding: 40px 30px;">
-          ${bodyContent}
-          <hr style="border: none; border-top: 1px solid #F3F4F6; margin: 30px 0;" />
-          <p style="font-size: 12px; color: #9CA3AF; text-align: center; margin: 0;">
-            © 2026 Reservi. Making dining better.<br>
-            admin@reservi-eat.ma
-          </p>
-        </div>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1F2937; max-width: 600px; margin: 0 auto; padding: 20px; line-height: 1.5;">
+      <h1 style="color: #B91C1C; font-size: 24px; font-weight: bold; margin-bottom: 24px; border-bottom: 1px solid #E5E7EB; padding-bottom: 12px;">Reservi</h1>
+      ${bodyContent}
+      <div style="margin-top: 40px; padding-top: 16px; border-top: 1px solid #E5E7EB; font-size: 12px; color: #6B7280;">
+        <p style="margin: 0;">© 2026 Reservi. All rights reserved.</p>
+        <p style="margin: 4px 0 0 0;">Contact: admin@reservi-eat.ma</p>
       </div>
     </div>
   `;

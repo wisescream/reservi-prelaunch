@@ -1,10 +1,12 @@
-import { Phone, Clock, CheckCircle2 } from "lucide-react";
+import { Phone, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { Navbar, PrimaryButton, SecondaryButton, PhoneMockup, EmailBanner, Footer, Page } from "./shared";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { motion } from "motion/react";
 import { StepCard } from "./step-card";
 import { SplitCard } from "./split-card";
 import { useTranslation } from "../../lib/translations";
+import { useState, useEffect } from "react";
+
 
 const heroFood = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900";
 
@@ -17,6 +19,36 @@ const fadeUp = {
 
 export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
   const { t, lang } = useTranslation();
+
+  const [timeLeft, setTimeLeft] = useState({ days: 20, hours: 0, minutes: 0, seconds: 0 });
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const targetDate = new Date("2026-05-18T18:19:19").getTime();
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    };
+
+    updateTimer();
+    const timer = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
 
   const features = lang === "ar" ? [
     { icon: <Phone size={26} />, title: "وداعاً للمكالمات الهاتفية", desc: "تخطى الانتظار - احجز بنقرة واحدة." },
@@ -50,29 +82,68 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
     <>
       <Navbar current="home" onNavigate={onNavigate} />
       {/* Hero */}
-      <section className="bg-white">
-        <div className="max-w-[1200px] mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+      <section 
+        className="relative bg-cover bg-center text-white py-20 md:py-28" 
+        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80')` }}
+      >
+        <div className="absolute inset-0 bg-black/70 z-0" />
+        <div className="relative max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-12 items-center z-10">
           <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
             <motion.span
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block px-3 py-1 rounded-full bg-[#FFF1EA] text-[#E8450A]"
+              className="inline-block px-3 py-1 rounded-full bg-[#E8450A]/20 text-[#FF7A45]"
               style={{ fontWeight: 600, fontSize: 13, letterSpacing: 1 }}
             >
               {lang === "ar" ? "قريباً" : lang === "fr" ? "BIENTÔT DISPONIBLE" : "COMING SOON"}
             </motion.span>
-            <h1 style={{ fontWeight: 800, fontSize: 56, lineHeight: 1.1, color: "#1A1A1A" }} className="mt-5">
+            <h1 style={{ fontWeight: 800, fontSize: 56, lineHeight: 1.1, color: "#FFFFFF" }} className="mt-5">
               {t("hero_title")}
             </h1>
-            <p style={{ color: "#555555", fontSize: 18 }} className="mt-5">
+            <p style={{ color: "#E5E7EB", fontSize: 18 }} className="mt-5">
               {t("hero_desc")}
             </p>
+
+            {isMounted && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="mt-8 grid grid-cols-4 gap-3 max-w-sm"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/20">
+                  <span className="block text-2xl font-bold text-[#FF7A45]">{timeLeft.days}</span>
+                  <span className="text-xs font-medium text-gray-300">{lang === "ar" ? "أيام" : lang === "fr" ? "Jours" : "Days"}</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/20">
+                  <span className="block text-2xl font-bold text-[#FF7A45]">{timeLeft.hours}</span>
+                  <span className="text-xs font-medium text-gray-300">{lang === "ar" ? "ساعات" : lang === "fr" ? "Heures" : "Hours"}</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/20">
+                  <span className="block text-2xl font-bold text-[#FF7A45]">{timeLeft.minutes}</span>
+                  <span className="text-xs font-medium text-gray-300">{lang === "ar" ? "دقائق" : lang === "fr" ? "Min" : "Min"}</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 text-center border border-white/20">
+                  <span className="block text-2xl font-bold text-[#FF7A45]">{timeLeft.seconds}</span>
+                  <span className="text-xs font-medium text-gray-300">{lang === "ar" ? "ثواني" : lang === "fr" ? "Sec" : "Sec"}</span>
+                </div>
+              </motion.div>
+            )}
+
             <div className="mt-8 flex items-center gap-4">
               <PrimaryButton onClick={() => onNavigate("waitlist")}>{t("join_waitlist")}</PrimaryButton>
-              <SecondaryButton onClick={() => onNavigate("features")}>
+              
+              <motion.button
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onNavigate("features")}
+                className="group inline-flex items-center gap-2 text-white hover:text-[#FF7A45] transition-colors px-6 py-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm shadow-lg"
+                style={{ fontWeight: 600 }}
+              >
                 {lang === "ar" ? "اعرف المزيد" : lang === "fr" ? "En savoir plus" : "Learn More"}
-              </SecondaryButton>
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+              </motion.button>
             </div>
           </motion.div>
           <div className="flex justify-center">
