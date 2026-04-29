@@ -52,8 +52,7 @@ export function NotFoundPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
           transition={{ delay: 0.4, duration: 0.6 }}
           className="text-white/60 mt-6 text-lg leading-relaxed"
         >
-          This route hasn't been mapped yet. But why let a dead end hold you back? 
-          Ask Antigravity, your paired AI developer, to jump in and remake the UI seamlessly!
+          We couldn't find the table you're looking for. It looks like this page has been moved or no longer exists.
         </motion.p>
 
         <motion.div
@@ -66,16 +65,8 @@ export function NotFoundPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
             onClick={() => onNavigate("home")}
             className="w-full sm:w-auto px-8 py-4 rounded-full bg-primary text-[#0B0B0F] font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all duration-300 cursor-pointer shadow-lg shadow-primary/25 group"
           >
-            Return to Safety
+            Return to Homepage
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-
-          <button
-            onClick={() => window.open("https://github.com/features/copilot", "_blank")}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white font-semibold flex items-center justify-center gap-2 backdrop-blur-sm transition-all duration-300 cursor-pointer"
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            Reconstruct UI
           </button>
         </motion.div>
       </div>
