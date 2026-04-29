@@ -55,22 +55,24 @@ const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partn
 export const submitWaitlistSignup = async (data: WaitlistData) => {
   const colRef = collection(db, "waitlist_signups");
   
+  const normalizedEmail = data.email.toLowerCase().trim();
+
   // Check for duplicates
-  const q = query(colRef, where("email", "==", data.email));
+  const q = query(colRef, where("email", "==", normalizedEmail));
   const querySnapshot = await getDocs(q);
   if (!querySnapshot.empty) {
     throw new Error("already_exists");
   }
 
   const docRef = await addDoc(colRef, {
-    email: data.email,
+    email: normalizedEmail,
     source_page: data.sourcePage,
     status: "pending",
     signed_up_at: serverTimestamp(),
   });
   
   // Trigger email confirmation in the background
-  triggerConfirmationEmail(data.email, "waitlist");
+  triggerConfirmationEmail(normalizedEmail, "waitlist");
   
   return docRef;
 };

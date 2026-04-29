@@ -260,12 +260,13 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
   );
 }
 
-export function PrimaryButton({ children, onClick, full }: { children: React.ReactNode; onClick?: () => void; full?: boolean }) {
+export function PrimaryButton({ children, onClick, full, type }: { children: React.ReactNode; onClick?: () => void; full?: boolean; type?: "button" | "submit" | "reset" }) {
   return (
     <motion.button
       whileHover={{ scale: 1.04, boxShadow: "0 10px 24px rgba(232,69,10,0.35)" }}
       whileTap={{ scale: 0.97 }}
       onClick={onClick}
+      type={type}
       data-magnet
       className={`bg-[#E8450A] hover:bg-[#c93a08] text-white px-6 py-3 rounded-lg transition-colors ${full ? "w-full" : ""}`}
       style={{ fontWeight: 600 }}

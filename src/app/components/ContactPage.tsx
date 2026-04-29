@@ -89,6 +89,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
                 const email = formData.get("email") as string;
                 const subject = formData.get("subject") as string;
                 const message = formData.get("message") as string;
+                console.log("Form submit triggered with:", { name, email, subject, message });
 
                 if (!name || !email || !subject || !message) {
                   toast.error(lang === "ar" ? "يرجى ملء جميع الحقول" : lang === "fr" ? "Veuillez remplir tous les champs" : "Please fill in all fields");
@@ -127,7 +128,7 @@ export function ContactPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
                 <label style={{ fontWeight: 600, color: "#1A1A1A" }}>{lang === "ar" ? "الرسالة" : lang === "fr" ? "Message" : "Message"}</label>
                 <textarea name="message" required rows={5} className="mt-1 w-full px-4 py-3 rounded-lg bg-white border border-gray-200 outline-none focus:border-[#E8450A] resize-none" placeholder={lang === "ar" ? "اكتب رسالتك هنا..." : lang === "fr" ? "Écrivez votre message..." : "Write your message..."} />
               </div>
-              <PrimaryButton full>{lang === "ar" ? "إرسال الرسالة" : lang === "fr" ? "Envoyer le message" : "Send Message"}</PrimaryButton>
+              <PrimaryButton full type="submit">{lang === "ar" ? "إرسال الرسالة" : lang === "fr" ? "Envoyer le message" : "Send Message"}</PrimaryButton>
             </form>
           </div>
         </div>
