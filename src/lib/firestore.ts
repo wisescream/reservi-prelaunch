@@ -1,4 +1,4 @@
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebase";
 
 /**
@@ -54,6 +54,14 @@ const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partn
  */
 export const submitWaitlistSignup = async (data: WaitlistData) => {
   const colRef = collection(db, "waitlist_signups");
+  
+  // Check for duplicates
+  const q = query(colRef, where("email", "==", data.email));
+  const querySnapshot = await getDocs(q);
+  if (!querySnapshot.empty) {
+    throw new Error("already_exists");
+  }
+
   const docRef = await addDoc(colRef, {
     email: data.email,
     source_page: data.sourcePage,

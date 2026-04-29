@@ -2,22 +2,29 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Write-only rule for waitlist_signups
+    // Rules for waitlist_signups
     match /waitlist_signups/{docId} {
-      allow read: if true;
-      allow create: if true;
+      allow read, write: if true;
     }
 
-    // Write-only rule for partner_requests (For Restaurants CTA)
+    // Rules for partner_requests (For Restaurants CTA)
     match /partner_requests/{docId} {
-      allow read: if true;
-      allow create: if true;
+      allow read, write: if true;
     }
 
     // Write-only rule for contact_messages
     match /contact_messages/{docId} {
-      allow read: if true;
-      allow create: if true;
+      allow read, write: if true;
+    }
+
+    // Rules for settings
+    match /settings/{docId} {
+      allow read, write: if true;
+    }
+
+    // Rules for users collection
+    match /users/{userId} {
+      allow read, write: if true;
     }
   }
 }
