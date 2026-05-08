@@ -57,12 +57,6 @@ export const submitWaitlistSignup = async (data: WaitlistData) => {
   
   const normalizedEmail = data.email.toLowerCase().trim();
 
-  // Check for duplicates
-  const q = query(colRef, where("email", "==", normalizedEmail));
-  const querySnapshot = await getDocs(q);
-  if (!querySnapshot.empty) {
-    throw new Error("already_exists");
-  }
 
   const docRef = await addDoc(colRef, {
     email: normalizedEmail,
