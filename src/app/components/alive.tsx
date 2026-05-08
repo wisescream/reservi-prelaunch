@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useInView, animate } from "motion/react";
 
 export function TiltCard({
@@ -36,7 +36,7 @@ export function TiltCard({
         mx.set(0.5);
         my.set(0.5);
       }}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1100 }}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1100, willChange: "transform" }}
       className={`relative ${className}`}
     >
       <motion.div
@@ -47,6 +47,7 @@ export function TiltCard({
           ),
           opacity: hover ? 1 : 0,
           transition: "opacity 0.25s",
+          willChange: "opacity, background",
         }}
       />
       {children}
@@ -79,6 +80,7 @@ export function AliveFeatureCard({
           className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-[#E8450A]/10 blur-2xl"
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+          style={{ willChange: "transform" }}
         />
         <motion.div
           whileHover={{ rotate: 12, scale: 1.12 }}
@@ -107,28 +109,37 @@ export function AliveFeatureCard({
   );
 }
 
-export function Counter({ to, suffix = "", prefix = "", duration = 1.6 }: { to: number; suffix?: string; prefix?: string; duration?: number }) {
+export const Counter = memo(({ to, suffix = "", prefix = "", duration = 1.6 }: { to: number; suffix?: string; prefix?: string; duration?: number }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [val, setVal] = useState(0);
+  const count = useMotionValue(0);
+  const display = useTransform(count, (latest) => 
+    to >= 1000 ? Math.round(latest).toLocaleString() : to % 1 === 0 ? Math.round(latest).toString() : latest.toFixed(1)
+  );
 
   useEffect(() => {
     if (!inView) return;
-    const c = animate(0, to, {
+    const c = animate(count, to, {
       duration,
       ease: "easeOut",
-      onUpdate: (v) => setVal(v),
     });
     return () => c.stop();
-  }, [inView, to, duration]);
+  }, [inView, to, duration, count]);
 
-  const display = to >= 1000 ? Math.round(val).toLocaleString() : to % 1 === 0 ? Math.round(val) : val.toFixed(1);
+  useEffect(() => {
+    return display.on("change", (v) => {
+      if (ref.current) {
+        ref.current.textContent = `${prefix}${v}${suffix}`;
+      }
+    });
+  }, [display, prefix, suffix]);
+
   return (
     <span ref={ref}>
-      {prefix}{display}{suffix}
+      {prefix}0{suffix}
     </span>
   );
-}
+});
 
 export function AliveValueCard({
   icon,

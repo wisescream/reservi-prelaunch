@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo, useCallback } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import { Heart, Pencil, Send, Camera } from "lucide-react";
 
@@ -31,6 +31,7 @@ export function KnifeForkCursor() {
   const ty = useSpring(cy, { stiffness: 500, damping: 18, mass: 0.25 });
 
   const lastPos = useRef({ x: 0, y: 0 });
+  const lastTrail = useRef(0);
 
   useEffect(() => {
     const check = () => setIsDesktop(window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches);
@@ -67,8 +68,11 @@ export function KnifeForkCursor() {
       setVisible(true);
 
       // Sparkle trail
-      if (Math.random() > 0.78) {
-        const id = Date.now() + Math.random();
+      // Sparkle trail - throttled for performance
+      const now = Date.now();
+      if (now - lastTrail.current > 45) {
+        lastTrail.current = now;
+        const id = now + Math.random();
         setTrail((tr) => [...tr.slice(-6), { id, x: e.clientX, y: e.clientY }]);
         setTimeout(() => setTrail((tr) => tr.filter((p) => p.id !== id)), 600);
       }
@@ -136,7 +140,7 @@ export function KnifeForkCursor() {
       {/* Trailing orange ghost dot */}
       <motion.div
         className="pointer-events-none fixed z-[9997] top-0 left-0"
-        style={{ x: tx, y: ty }}
+        style={{ x: tx, y: ty, willChange: "transform" }}
       >
         <motion.div
           className="rounded-full bg-[#E8450A]"
@@ -153,10 +157,10 @@ export function KnifeForkCursor() {
       {/* Main cursor */}
       <motion.div
         className="pointer-events-none fixed z-[9999] top-0 left-0"
-        style={{ x: cx, y: cy }}
+        style={{ x: cx, y: cy, willChange: "transform" }}
       >
         <motion.div
-          style={{ x: -18, y: -18 }}
+          style={{ x: -18, y: -18, willChange: "transform" }}
           animate={{ scale, opacity: visible ? 1 : 0 }}
           transition={{ type: "spring", stiffness: 400, damping: 26 }}
         >
@@ -179,7 +183,7 @@ export function KnifeForkCursor() {
                 exit={{ scale: 0 }}
                 className="w-9 h-9 rounded-full bg-[#E8450A] grid place-items-center"
               >
-                <motion.div animate={{ x: [0, 3, 0] }} transition={{ duration: 1.2, repeat: Infinity }}>
+                <motion.div animate={{ x: [0, 3, 0] }} transition={{ duration: 1.2, repeat: Infinity }} style={{ willChange: "transform" }}>
                   <Send size={18} stroke="white" fill="white" />
                 </motion.div>
               </motion.div>
@@ -225,6 +229,7 @@ export function KnifeForkCursor() {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#E8450A]"
               initial={{ width: 0, height: 0, opacity: 0 }}
               animate={{ width: 44, height: 44, opacity: 0.5 }}
+              style={{ willChange: "width, height, opacity" }}
             />
           )}
         </motion.div>
@@ -233,7 +238,7 @@ export function KnifeForkCursor() {
       {/* Contextual label */}
       <motion.div
         className="pointer-events-none fixed z-[9999] top-0 left-0"
-        style={{ x: cx, y: cy }}
+        style={{ x: cx, y: cy, willChange: "transform" }}
       >
         <AnimatePresence>
           {label && (
@@ -252,26 +257,7 @@ export function KnifeForkCursor() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Sparkle trail */}
-      <AnimatePresence>
-        {trail.map((p) => (
-          <motion.div
-            key={p.id}
-            className="pointer-events-none fixed z-[9996] top-0 left-0 rounded-full"
-            style={{
-              x: p.x - 3,
-              y: p.y - 3,
-              width: 6,
-              height: 6,
-              background: "#E8450A",
-            }}
-            initial={{ opacity: 0.7, scale: 1 }}
-            animate={{ opacity: 0, scale: 0.2 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          />
-        ))}
-      </AnimatePresence>
+      <SparkleTrail trail={trail} />
 
       <AnimatePresence>
         {throws.map((t) => (
@@ -288,12 +274,13 @@ export function KnifeForkCursor() {
   );
 }
 
-function UtensilsCursor({ idle }: { idle: boolean }) {
+const UtensilsCursor = memo(({ idle }: { idle: boolean }) => {
   return (
     <motion.svg
       width="36" height="36" viewBox="0 0 36 36"
       animate={{ rotate: idle ? [-12, -8, -12, -16, -12] : -12 }}
       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      style={{ willChange: "transform" }}
     >
       <g stroke="#1A1A1A" strokeWidth="1.6" strokeLinecap="round" fill="#1A1A1A">
         <line x1="9" y1="4" x2="9" y2="11" />
@@ -308,7 +295,32 @@ function UtensilsCursor({ idle }: { idle: boolean }) {
       </g>
     </motion.svg>
   );
-}
+});
+
+const SparkleTrail = memo(({ trail }: { trail: { id: number; x: number; y: number }[] }) => {
+  return (
+    <AnimatePresence>
+      {trail.map((p) => (
+        <motion.div
+          key={p.id}
+          className="pointer-events-none fixed z-[9996] top-0 left-0 rounded-full"
+          style={{
+            x: p.x - 3,
+            y: p.y - 3,
+            width: 6,
+            height: 6,
+            background: "#E8450A",
+            willChange: "transform, opacity",
+          }}
+          initial={{ opacity: 0.7, scale: 1 }}
+          animate={{ opacity: 0, scale: 0.2 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        />
+      ))}
+    </AnimatePresence>
+  );
+});
 
 function ThrowBurst({ x, y }: { x: number; y: number }) {
   return (

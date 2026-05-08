@@ -23,6 +23,20 @@ export default defineConfig({
     // Tailwind is not being actively used – do not remove them
     react(),
     tailwindcss(),
+    {
+      name: 'api-middleware',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/api/send-confirmation' && req.method === 'POST') {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: true, message: 'Mocked email sent (Dev Mode)' }));
+            return;
+          }
+          next();
+        });
+      },
+    },
   ],
   resolve: {
     alias: {

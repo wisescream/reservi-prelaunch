@@ -42,7 +42,7 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
       <Navbar current="features" onNavigate={onNavigate} />
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-          <motion.h2 initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ fontWeight: 800, fontSize: 48, color: "#1A1A1A", lineHeight: 1.15 }}>
+          <motion.h2 initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ fontWeight: 800, fontSize: 48, color: "#1A1A1A", lineHeight: 1.15, willChange: "transform, opacity" }}>
             {lang === "ar" ? "كل ما تحتاجه لتجربة طعام مثالية" : lang === "fr" ? "Tout ce dont vous avez besoin pour une sortie réussie" : "Everything you need for the perfect dining experience"}
           </motion.h2>
           <div className="relative h-[520px]">
@@ -61,7 +61,7 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
 
       <section className="bg-white">
         <div className="max-w-[1200px] mx-auto px-6 py-20 text-center">
-          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 40, color: "#1A1A1A" }} className="mb-12">
+          <motion.h2 {...fadeUp} style={{ fontWeight: 800, fontSize: 40, color: "#1A1A1A", willChange: "transform, opacity" }} className="mb-12">
             {lang === "ar" ? "طريقة أفضل لتناول الطعام خارج المنزل" : lang === "fr" ? "Une meilleure façon de dîner" : "A better way to dine out"}
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -86,11 +86,13 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
                   transition={{ delay: i * 0.15, type: "spring", stiffness: 140 }}
                   whileHover={{ y: -6 }}
                   className="relative bg-white border border-gray-100 rounded-2xl p-8 flex flex-col items-center overflow-hidden"
+                  style={{ willChange: "transform" }}
                 >
                   <motion.div
                     className="absolute inset-x-0 -bottom-12 h-24 bg-[#E8450A]/15 blur-2xl"
                     animate={{ y: [0, -8, 0] }}
                     transition={{ duration: 3.5, repeat: Infinity }}
+                    style={{ willChange: "transform" }}
                   />
                   <motion.div
                     whileHover={{ rotate: 12, scale: 1.15 }}

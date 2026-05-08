@@ -88,7 +88,7 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       >
         <div className="absolute inset-0 bg-black/70 z-0" />
         <div className="relative max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-12 items-center z-10">
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
+          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} style={{ willChange: "transform, opacity" }}>
             <motion.span
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onNavigate("features")}
                 className="group inline-flex items-center gap-2 text-white hover:text-[#FF7A45] transition-colors px-6 py-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm shadow-lg"
-                style={{ fontWeight: 600 }}
+                style={{ fontWeight: 600, willChange: "transform" }}
               >
                 {lang === "ar" ? "اعرف المزيد" : lang === "fr" ? "En savoir plus" : "Learn More"}
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
@@ -204,11 +204,13 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             viewport={{ once: true }}
             whileHover={{ scale: 1.02 }}
             className="rounded-2xl overflow-hidden h-72 md:h-auto relative group"
+            style={{ willChange: "transform" }}
           >
             <ImageWithFallback
               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900"
               alt="Restaurant"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              style={{ willChange: "transform" }}
               {...({ loading: "lazy" } as any)}
             />
           </motion.div>
@@ -218,11 +220,13 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             viewport={{ once: true }}
             whileHover={{ scale: 1.02 }}
             className="rounded-2xl overflow-hidden h-72 md:h-auto relative group"
+            style={{ willChange: "transform" }}
           >
             <ImageWithFallback
               src="https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=900"
               alt="Diner"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              style={{ willChange: "transform" }}
               {...({ loading: "lazy" } as any)}
             />
           </motion.div>
@@ -250,6 +254,7 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
               className="flex gap-16 whitespace-nowrap"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+              style={{ willChange: "transform" }}
             >
               {[...Array(2)].flatMap((_, k) =>
                 ["Bella Italia", "Sakura", "Verde", "Olive & Fig", "Maison", "Le Petit", "Nori House", "Casa Roja"].map((n) => (
@@ -272,6 +277,7 @@ export function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
                 className="w-2 h-2 rounded-full bg-[#E8450A]"
                 animate={{ scale: [1, 1.6, 1], opacity: [0.4, 1, 0.4] }}
                 transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.18 }}
+                style={{ willChange: "transform, opacity" }}
               />
             ))}
           </div>

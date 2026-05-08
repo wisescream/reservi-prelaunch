@@ -167,7 +167,7 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
               whileTap={{ scale: 0.96 }}
               onClick={() => onNavigate("waitlist")}
               className="hidden sm:inline-flex relative items-center gap-2 bg-[#1A1A1A] hover:bg-[#E8450A] text-white px-5 py-2.5 rounded-full transition-colors group overflow-hidden"
-              style={{ fontWeight: 600, fontSize: 14 }}
+              style={{ fontWeight: 600, fontSize: 14, willChange: "transform" }}
             >
               <motion.span
                 className="absolute inset-0 bg-[#E8450A]"
@@ -207,7 +207,7 @@ export function Navbar({ current, onNavigate }: { current: Page; onNavigate: (p:
         {/* Scroll progress bar */}
         <motion.div
           className="h-[2px] bg-[#E8450A] origin-left"
-          style={{ scaleX: progressX }}
+          style={{ scaleX: progressX, willChange: "transform" }}
         />
 
         {/* Mobile menu */}
@@ -315,6 +315,7 @@ export function PhoneMockup({ image, className = "", fetchpriority }: { image?: 
           width: 280, 
           height: 560, 
           transformStyle: "preserve-3d",
+          willChange: "transform, opacity"
         }}
         className="relative"
       >
@@ -523,11 +524,13 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
         className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#E8450A]/30 blur-3xl"
         animate={{ x: [0, 60, 0], y: [0, 40, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        style={{ willChange: "transform" }}
       />
       <motion.div
         className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#E8450A]/20 blur-3xl"
         animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        style={{ willChange: "transform" }}
       />
 
       <div className="relative max-w-[1200px] mx-auto px-6 pt-20 pb-10">
@@ -635,7 +638,7 @@ export function Footer({ onNavigate }: { onNavigate?: (p: Page) => void }) {
       <motion.div
         aria-hidden
         className="pointer-events-none select-none absolute bottom-[-50px] left-1/2 -translate-x-1/2 whitespace-nowrap text-white/5"
-        style={{ fontWeight: 900, fontSize: 240, letterSpacing: -8 }}
+        style={{ fontWeight: 900, fontSize: 240, letterSpacing: -8, willChange: "transform" }}
         animate={{ x: ["-50%", "-52%", "-50%"] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >

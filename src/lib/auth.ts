@@ -63,19 +63,6 @@ export async function getAdminUser(uid: string): Promise<AdminUser | null> {
   }
 }
 
-/**
- * Create admin user in Firestore (for setup only - should be done via Firestore console)
- */
-export async function createAdminUser(uid: string, email: string): Promise<void> {
-  try {
-    await getDoc(doc(db, "users", uid));
-    // In production, only admin console should create admins
-    console.warn("Admin creation should be handled via Firestore console");
-  } catch (error) {
-    console.error("Error creating admin user:", error);
-    throw error;
-  }
-}
 
 /**
  * Get all admin emails for whitelist validation
