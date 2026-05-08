@@ -78,7 +78,7 @@ export function AboutPage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             >
               <video 
                 ref={videoRef}
-                src="/about-video.mp4" 
+                src={lang === "ar" ? "/about-video-english.mp4" : "/about-video.mp4"} 
                 className="w-full h-full object-cover transition-opacity duration-300" 
                 style={{ opacity: isPlaying ? 1 : 0.7 }}
                 loop 
