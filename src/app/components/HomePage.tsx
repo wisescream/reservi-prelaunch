@@ -8,7 +8,7 @@ import { useTranslation } from "../../lib/translations";
 import { useState, useEffect } from "react";
 
 
-const heroFood = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900";
+const heroFood = "/homepage-picture.jpeg";
 
 const fadeUp = {
   initial: { opacity: 0, y: 28 },
