@@ -3,7 +3,9 @@ import { Navbar, PhoneMockup, Footer, Page, useTranslation } from "./shared";
 import { motion } from "motion/react";
 import { AliveFeatureCard, Counter, TiltCard } from "./alive";
 
-const heroFood = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900";
+const heroChat = "/reservi-ai-chat-reservation.jpeg";
+const heroHunt = "/hunt-page.jpeg";
+const heroPlans = "/plans-page.jpeg";
 
 const fadeUp = {
   initial: { opacity: 0, y: 28 },
@@ -46,9 +48,9 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
             {lang === "ar" ? "كل ما تحتاجه لتجربة طعام مثالية" : lang === "fr" ? "Tout ce dont vous avez besoin pour une sortie réussie" : "Everything you need for the perfect dining experience"}
           </motion.h2>
           <div className="relative h-[520px]">
-            <div className="absolute left-0 top-6"><PhoneMockup image={heroFood} /></div>
-            <div className="absolute left-32 top-0 hidden md:block"><PhoneMockup image="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600" /></div>
-            <div className="absolute left-64 top-12 hidden lg:block"><PhoneMockup image="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600" /></div>
+            <div className="absolute left-0 top-6"><PhoneMockup image={heroChat} /></div>
+            <div className="absolute left-32 top-0 hidden md:block"><PhoneMockup image={heroHunt} /></div>
+            <div className="absolute left-64 top-12 hidden lg:block"><PhoneMockup image={heroPlans} /></div>
           </div>
         </div>
       </section>
