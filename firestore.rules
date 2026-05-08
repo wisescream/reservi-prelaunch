@@ -10,7 +10,8 @@ service cloud.firestore {
     // Rules for waitlist_signups
     match /waitlist_signups/{docId} {
       allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow get: if true;
+      allow list, update, delete: if isAdmin();
     }
 
     // Rules for partner_requests (For Restaurants CTA)

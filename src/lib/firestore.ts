@@ -1,4 +1,4 @@
-import { collection, addDoc, serverTimestamp, getDocs, query, where } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, getDocs, query, where, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 /**
@@ -53,18 +53,17 @@ const triggerConfirmationEmail = async (email: string, type: "waitlist" | "partn
  * Enforces schema: email, source_page, status (default: 'pending'), signed_up_at
  */
 export const submitWaitlistSignup = async (data: WaitlistData) => {
-  const colRef = collection(db, "waitlist_signups");
-  
   const normalizedEmail = data.email.toLowerCase().trim();
+  const docRef = doc(db, "waitlist_signups", normalizedEmail);
+  
+  // Check existence using direct getDoc (safer than list query)
+  const docSnap = await getDoc(docRef);
 
-  const q = query(colRef, where("email", "==", normalizedEmail));
-  const querySnapshot = await getDocs(q);
-
-  if (!querySnapshot.empty) {
+  if (docSnap.exists()) {
     throw new Error("already_exists");
   }
 
-  const docRef = await addDoc(colRef, {
+  await setDoc(docRef, {
     email: normalizedEmail,
     source_page: data.sourcePage,
     status: "pending",
@@ -122,4 +121,3 @@ export const submitContactMessage = async (data: ContactData) => {
 
   return docRef;
 };
-
