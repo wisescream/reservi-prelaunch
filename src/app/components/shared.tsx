@@ -357,27 +357,14 @@ export function PhoneMockup({ image, className = "", fetchpriority }: { image?: 
               className="w-full h-full object-cover"
               {...({ fetchpriority } as any)}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+
             
             {/* Dynamic Island */}
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full border border-white/10 z-20 flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-blue-500/30 blur-[1px] mr-2" />
             </div>
 
-            {/* Content Card */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="absolute bottom-6 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/20"
-            >
-              <div className="text-xs text-[#555]" style={{ fontWeight: 600 }}>Tonight, 7:30 PM</div>
-              <div style={{ fontWeight: 800, color: "#1A1A1A", fontSize: 16 }} className="mt-1">Bella Italia</div>
-              <div className="flex gap-2 mt-3">
-                <span className="text-xs font-semibold px-2 py-1 rounded bg-[#E8450A] text-white">Available</span>
-                <span className="text-xs font-semibold px-2 py-1 rounded bg-gray-100 text-[#555]">2 guests</span>
-              </div>
-            </motion.div>
+
           </div>
         </div>
 
