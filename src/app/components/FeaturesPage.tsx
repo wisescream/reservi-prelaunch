@@ -18,21 +18,21 @@ export function FeaturesPage({ onNavigate }: { onNavigate: (p: Page) => void }) 
   const { t, lang } = useTranslation();
   const features = lang === "ar" ? [
     { icon: <Clock size={26} />, title: "التوافر في الوقت الفعلي", desc: "تحديثات حية للطاولات المتاحة فور الحجز." },
-    { icon: <Sparkles size={26} />, title: "توصيات ذكية", desc: "اكتشف مطاعم مخصصة لتناسب ذوقك." },
+    { icon: <Sparkles size={26} />, title: "توصيات ذكية", desc: "اكتشف مطاعم تناسب ذوقك وحجوزات عبر الدردشة بالذكاء الاصطناعي." },
     { icon: <Zap size={26} />, title: "تأكيد فوري", desc: "احصل على إشعار فور حجز طاولتك." },
     { icon: <Settings size={26} />, title: "إدارة سهلة", desc: "عدّل أو ألغِ حجزك بنقرة واحدة." },
     { icon: <Star size={26} />, title: "وصول حصري", desc: "أوقات حصرية للأعضاء وقوائم تذوق خاصة." },
     { icon: <Shield size={26} />, title: "آمن وموثوق", desc: "بياناتك ومعلومات الدفع آمنة دائماً." },
   ] : lang === "fr" ? [
     { icon: <Clock size={26} />, title: "Disponibilité réelle", desc: "Suivez les tables libres en direct." },
-    { icon: <Sparkles size={26} />, title: "Recommandations", desc: "Découvrez des restaurants adaptés à vos goûts." },
+    { icon: <Sparkles size={26} />, title: "Recommandations", desc: "Découvrez des restaurants adaptés à vos goûts et réservez via chat IA." },
     { icon: <Zap size={26} />, title: "Confirmation immédiate", desc: "Notification dès que la table est prête." },
     { icon: <Settings size={26} />, title: "Gestion facile", desc: "Modifiez votre réservation en un clic." },
     { icon: <Star size={26} />, title: "Accès exclusif", desc: "Créneaux membres et menus dégustation spéciaux." },
     { icon: <Shield size={26} />, title: "Sécurisé & Fiable", desc: "Paiements et données constamment protégés." },
   ] : [
     { icon: <Clock size={26} />, title: "Real-time availability", desc: "See open tables update live as guests book." },
-    { icon: <Sparkles size={26} />, title: "Smart recommendations", desc: "Discover restaurants tailored to your taste." },
+    { icon: <Sparkles size={26} />, title: "Smart recommendations", desc: "Discover restaurants tailored to your taste with seamless AI chat reservations." },
     { icon: <Zap size={26} />, title: "Instant confirmation", desc: "Get notified the moment your table is set." },
     { icon: <Settings size={26} />, title: "Easy management", desc: "Modify or cancel your booking with one tap." },
     { icon: <Star size={26} />, title: "Exclusive access", desc: "Members-only times and special tasting menus." },
