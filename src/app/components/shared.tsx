@@ -442,9 +442,14 @@ export function EmailJoin({ dark }: { dark?: boolean }) {
       toast.success("You're on the waitlist!", { description: `We'll email ${email} when we launch.` });
       triggerCursorSuccess();
       setEmail("");
-    } catch (error) {
-      toast.error("Failed to join waitlist. Please try again.");
-      console.error(error);
+    } catch (error: any) {
+      if (error.message === "already_exists") {
+        toast.info("You're already on the waitlist!", { description: `We already have ${email} saved.` });
+        setEmail("");
+      } else {
+        toast.error("Failed to join waitlist. Please try again.");
+        console.error(error);
+      }
     }
   };
 
